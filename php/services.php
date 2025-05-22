@@ -56,8 +56,7 @@ $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </header>
 
-
-    <div class="search-container">
+    <section class="hero services-hero">
         <form method="GET" action="">
             <input type="text" name="keywords" placeholder="Enter Keywords"
                    value="<?php echo isset($_GET['keywords']) ? htmlspecialchars($_GET['keywords']) : ''; ?>">
@@ -123,20 +122,33 @@ $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <button type="button">CLEAR</button>
             </a>
         </form>
-    </div>
+    </section>
 
-
-    <div class="service-providers-container" style="background-color: #e9eaeb; padding: 20px 0;">
-        <h2 style="font-size: 24px; font-weight: bold; margin: 0 auto; color: #333; max-width: 900px;">Service Providers</h2>
+    <section class="what-we-offer services-section">
+        <h2>Service Providers</h2>
         <div class="service-list">
             <?php if (count($serviceProviders) > 0): ?>
                 <?php foreach ($serviceProviders as $provider): ?>
                     <div class="service-item">
                         <div class="details">
                             <h3><?php echo htmlspecialchars($provider['first_name']); ?></h3>
-                            <p><?php echo htmlspecialchars($provider['services']); ?></p>
-                            <p><?php echo htmlspecialchars($provider['skills']); ?></p>
-                            <p>📍 <?php echo htmlspecialchars($provider['address']); ?> </p>
+                            <p>
+                                <?php
+                                // Show services as blue water drop and snowflake icons if present
+                                $services = array_map('trim', explode(',', $provider['services']));
+                                $serviceIcons = [
+                                    'Sprinkler Repair' => '💧',
+                                    'Snow Removal' => '❄️',
+                                ];
+                                $serviceParts = [];
+                                foreach ($services as $service) {
+                                    $icon = isset($serviceIcons[$service]) ? $serviceIcons[$service] : '🛠️';
+                                    $serviceParts[] = '<span style="color:#2196f3;">' . $icon . '</span> ' . htmlspecialchars($service);
+                                }
+                                echo implode(', ', $serviceParts);
+                                ?>
+                            </p>
+                            <p class="location"><span class="icon" style="color:#e53935;">📍</span> <?php echo htmlspecialchars($provider['address']); ?></p>
                         </div>
                         <div class="actions">
                             <a href="user_profile.php?id=<?php echo urlencode($provider['id']); ?>" class="view-profile">View Full Profile</a>
@@ -145,11 +157,10 @@ $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p style="text-align:center; font-size:18px; color:#777;">No service providers found matching your search.</p>
+                <p style="text-align:left; font-size:18px; color:#777;">No service providers found matching your search.</p>
             <?php endif; ?>
         </div>
-    </div>
-
+    </section>
 
     <footer>
         <div class="footer-links">

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Skill Sphere - Register</title>
   <link rel="stylesheet" href="../designs/sign_up1.css">
+  <link rel="stylesheet" href="../designs/header1.css">
 </head>
 <body>
 <header>

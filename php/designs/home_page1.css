@@ -7,14 +7,14 @@
 }
 
 body {
-    background-color: #f8f9fa;
+    background-color: var(--teal-bg);
     color: #2c3e50;
     line-height: 1.6;
 }
 
 /* Hero Section Styles */
 .hero {
-    background: linear-gradient(135deg, #1B4D43 0%, #2a6a5d 100%);
+    background: linear-gradient(135deg, var(--teal-main) 0%, var(--teal-light) 100%);
     color: white;
     padding: 100px 50px;
     position: relative;
@@ -28,8 +28,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('path/to/pattern.svg') center/cover;
-    opacity: 0.1;
+    background: url('assets/pattern.svg') repeat center center;
+    opacity: 0.08;
+    z-index: 0;
 }
 
 .hero-content {
@@ -55,6 +56,15 @@ body {
     line-height: 1.2;
     font-weight: 700;
     letter-spacing: -1px;
+}
+
+.hero h2 .skilled-key {
+    color: var(--accent);
+    background: rgba(255,165,0,0.13);
+    border-radius: 12px;
+    padding: 0 10px;
+    font-weight: 900;
+    box-shadow: 0 2px 8px rgba(255,165,0,0.08);
 }
 
 .hero-content .since .highlight {
@@ -85,18 +95,17 @@ body {
 }
 
 .get-started {
-    background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%);
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(74,155,142,0.18);
+    background: linear-gradient(135deg, var(--accent) 0%, #ffb733 100%);
+    transition: background 0.2s, box-shadow 0.2s;
     color: #fff;
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    border-radius: 30px;
-    overflow: hidden;
     text-decoration: none;
     padding: 15px 30px;
     font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
     font-size: 1.1rem;
 }
 
@@ -109,8 +118,8 @@ body {
 }
 
 .get-started:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+    background: linear-gradient(135deg, var(--teal-light) 0%, var(--accent) 100%);
+    box-shadow: 0 8px 24px rgba(74,155,142,0.22);
 }
 
 .get-started:hover i {
@@ -120,16 +129,22 @@ body {
 /* What We Offer Section Styles */
 .what-we-offer {
     padding: 80px 50px;
-    background-color: #fff;
+    background-color: var(--teal-bg);
+    border-radius: 18px;
+    box-shadow: 0 6px 32px rgba(44,62,80,0.08);
 }
 
 .what-we-offer h2 {
-    font-size: 2.5rem;
+    color: var(--teal-main);
+    background: linear-gradient(90deg, var(--teal-bg), #fff 80%);
+    display: inline-block;
+    padding: 8px 32px 8px 0;
+    border-radius: 0 24px 24px 0;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -1px;
     margin-bottom: 40px;
     position: relative;
-    display: inline-block;
-    color: #2c3e50;
-    font-weight: 700;
 }
 
 .what-we-offer h2::after {
@@ -179,20 +194,22 @@ body {
     align-items: center;
     margin-bottom: 30px;
     padding: 20px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
+    background: var(--teal-bg);
+    border-radius: 18px;
+    box-shadow: 0 6px 32px rgba(44,62,80,0.08);
+    border: 1.5px solid var(--teal-dark);
+    transition: box-shadow 0.2s, border-color 0.2s;
 }
 
 .service-item:hover {
-    transform: translateX(10px);
+    box-shadow: 0 12px 40px rgba(74,155,142,0.13);
+    border-color: var(--teal-light);
 }
 
 .service-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #1B4D43 0%, #2a6a5d 100%);
+    background: linear-gradient(135deg, var(--teal-main) 0%, var(--teal-light) 100%);
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -262,7 +279,7 @@ body {
 }
 
 .mission h2, .vision h2 {
-    color: #ffa500;
+    color: var(--teal-main);
     font-size: 2rem;
     margin-bottom: 25px;
     position: relative;
@@ -289,7 +306,7 @@ body {
 
 /* Footer */
 footer {
-    background: linear-gradient(135deg, #1B4D43 0%, #2a6a5d 100%);
+    background: linear-gradient(135deg, var(--teal-main) 0%, var(--teal-light) 100%);
     color: white;
     padding: 40px 50px;
     text-align: center;
@@ -443,4 +460,13 @@ nav ul li a.active {
 
 .join-button .btn:hover {
   background-color: #2a6a5d;
+}
+
+/* Accent for subheadings/keywords */
+.accent {
+  color: var(--accent);
+  font-weight: 700;
+  background: rgba(255,165,0,0.08);
+  border-radius: 8px;
+  padding: 2px 8px;
 }

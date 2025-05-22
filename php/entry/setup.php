@@ -5,25 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skill Sphere Profile</title>
   <link rel="stylesheet" href="../designs/setup1.css">
+  <link rel="stylesheet" href="../designs/header1.css">
 </head>
 <body>
   <header>
     <div class="logo-container">
-      <a href="home_page.php">
-        <img src="../assets/logo_ss.png" alt="Skill Sphere Logo" class="logo">
-      </a>
+      <a href="../home_page.php" style="text-decoration: none; font-weight: bold; color: #333;"><img src="../assets/logo_ss.png" alt="Skill Sphere Logo" class="logo"></a>
       <h1>Skill Sphere</h1>
     </div>
     <nav>
-      <ul class="nav-links">
-        <li><a href="home_page.php">HOME</a></li>
-        <li><a href="services.php">SERVICES</a></li>
-        <li><a href="about_us.php">ABOUT</a></li>
-        <li><a href="contact_us.php">CONTACT US</a></li>
+      <ul>
+        <li><a href="../home_page.php">HOME</a></li>
+        <li><a href="../services.php">SERVICES</a></li>
+        <li><a href="../about_us.php">ABOUT</a></li>
+        <li><a href="../contact_us.php">CONTACT US</a></li>
       </ul>
     </nav>
     <div class="join-button">
-      <a href="entry/sign_up.php" class="btn">JOIN US!</a>
+      <a href="sign_up.php" class="btn">JOIN US!</a>
     </div>
   </header>
 

@@ -59,7 +59,7 @@ function renderHero() {
     <section class="hero">
         <div class="hero-content">
             <div class="since">SINCE 2025</div>
-            <h2>EXPERIENCE FINDING <span class="highlight">SKILLED PERSONNEL</span> WITH<br> JUST A CLICK!</h2>
+            <h2>EXPERIENCE FINDING <span class="skilled-key">SKILLED PERSONNEL</span> WITH<br> JUST A CLICK!</h2>
             <p>Skill Sphere is your go-to platform for finding skilled workers effortlessly. Whether you need a plumber, tutor, designer, or any service, our mission is to connect you with experienced professionals—fast, reliable, and just a click away.</p>
             <a href="entry/sign_up.php" class="btn get-started">
     <div class="circle-icon">
