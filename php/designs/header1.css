@@ -1,0 +1,136 @@
+header {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  padding: 15px 50px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  gap: 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+  transform: scale(1.02);
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: rotate(5deg);
+}
+
+.logo-container h1 {
+  text-decoration: none;
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0 15px;
+  position: relative;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 8px 0;
+  font-size: 1.1rem;
+}
+
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffa500;
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+  width: 100%;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: #ffa500;
+}
+
+.join-button {
+  margin-left: auto;
+}
+
+.join-button .btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #1B4D43 0%, #2a6a5d 100%);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-left: 20px;
+  box-shadow: 0 4px 15px rgba(27, 77, 67, 0.2);
+  border: none;
+  font-size: 1.1rem;
+}
+
+.join-button .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(27, 77, 67, 0.3);
+  background: linear-gradient(135deg, #2a6a5d 0%, #1B4D43 100%);
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .join-button .btn {
+    margin: 10px 0;
+  }
+}
