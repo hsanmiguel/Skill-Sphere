@@ -1,5 +1,5 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 // DB connection
 $conn = new mysqli("localhost", "root", "", "registered_accounts");
@@ -46,9 +46,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION["user_id"] = $user_id;
                 $_SESSION["email"] = $email;
             
-                // Use PHP header for redirection instead of JavaScript
-                header("Location: ../entry/setup.php"); // Adjust path as needed
-                exit();
+                // Fetch first name from user_profiles
+                $firstName = "";
+                $profileStmt = $conn->prepare("SELECT first_name FROM user_profiles WHERE email = ?");
+                $profileStmt->bind_param("s", $email);
+                $profileStmt->execute();
+                $profileStmt->bind_result($firstName);
+                $profileStmt->fetch();
+                $_SESSION["first_name"] = $firstName ? $firstName : $email; // fallback to email if no name
+                $profileStmt->close();
+
+                // Check if user has completed setup (has a profile)
+                $profileCheckStmt = $conn->prepare("SELECT id FROM user_profiles WHERE email = ?");
+                $profileCheckStmt->bind_param("s", $email);
+                $profileCheckStmt->execute();
+                $profileCheckStmt->store_result();
+
+                if ($profileCheckStmt->num_rows > 0) {
+                    // Profile exists, redirect to homepage/dashboard
+                    header("Location: ../home_page.php");
+                    exit();
+                } else {
+                    // No profile, redirect to setup
+                    header("Location: ../entry/setup.php");
+                    exit();
+                }
             } else {
                 $loginErr = "Incorrect password.";
             }
@@ -60,6 +82,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->close();
     }
 }
+
+// Handle logout
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header("Location: sign_in.php");
+    exit();
+}
+
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -85,9 +116,20 @@ $conn->close();
       <li><a href="../contact_us.php">CONTACT US</a></li>
     </ul>
   </nav>
-  <div class="join-button">
-    <a href="sign_up.php" class="btn">JOIN US!</a>
-  </div>
+  <?php if (isset($_SESSION["user_id"])): ?>
+    <div class="user-info" style="margin-left:auto; display: flex; align-items: center; gap: 18px; font-weight:600; color:#1B4D43; padding-left: 20px;">
+      <a href="../user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none;">
+        <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
+      </a>
+      <form method="post" action="" style="display:inline; margin:0;">
+        <button type="submit" name="logout" style="margin-left:10px; background: linear-gradient(135deg, #e53935 0%, #ffb733 100%); color: #fff; border: none; border-radius: 20px; padding: 8px 18px; font-weight: 600; cursor: pointer;">Logout</button>
+      </form>
+    </div>
+  <?php else: ?>
+    <div class="join-button">
+      <a href="sign_up.php" class="btn">JOIN US!</a>
+    </div>
+  <?php endif; ?>
 </header>
 
 

@@ -1,4 +1,13 @@
 <?php include ('server.php') ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header("Location: sign_in.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,9 +31,20 @@
       <li><a href="../contact_us.php">CONTACT US</a></li>
     </ul>
   </nav>
-  <div class="join-button">
-    <a href="sign_up.php" class="btn">JOIN US!</a>
-  </div>
+  <?php if (isset($_SESSION["user_id"])): ?>
+    <div class="user-info" style="margin-left:auto; display: flex; align-items: center; gap: 18px; font-weight:600; color:#1B4D43; padding-left: 20px;">
+      <a href="../user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none;">
+        <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
+      </a>
+      <form method="post" action="" style="display:inline; margin:0;">
+        <button type="submit" name="logout" style="margin-left:10px; background: linear-gradient(135deg, #e53935 0%, #ffb733 100%); color: #fff; border: none; border-radius: 20px; padding: 8px 18px; font-weight: 600; cursor: pointer;">Logout</button>
+      </form>
+    </div>
+  <?php else: ?>
+    <div class="join-button">
+      <a href="sign_up.php" class="btn">JOIN US!</a>
+    </div>
+  <?php endif; ?>
 </header>
 
 
