@@ -1,6 +1,8 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
     header("Location: entry/sign_in.php");
     exit();
 }
@@ -59,9 +61,10 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Full History - Skill Sphere</title>
-    <link rel="stylesheet" href="designs/footer.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - Skill Sphere</title>
     <link rel="stylesheet" href="designs/header1.css">
+    <link rel="stylesheet" href="designs/footer.css">
     <style>
         body { background: #f6f7f9; }
         .history-container { max-width: 1000px; margin: 40px auto 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 36px 32px; }
@@ -76,65 +79,65 @@ $conn->close();
     </style>
 </head>
 <body>
-<?php include 'header.php'; ?>
-<div class="history-container">
-    <h2>Full History</h2>
-    <div class="history-section">
-        <h3>All Notifications</h3>
-        <?php if (!empty($all_notifications)): ?>
-            <ul class="history-list">
-                <?php foreach ($all_notifications as $notif): ?>
-                    <li class="history-item">
-                        <div><?php echo htmlspecialchars($notif['message']); ?>
-                            <?php if ($notif['deleted']): ?><span class="deleted-label">[Deleted]</span><?php endif; ?>
-                        </div>
-                        <div class="history-meta">Type: <?php echo htmlspecialchars($notif['type']); ?> | <?php echo htmlspecialchars($notif['created_at']); ?></div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <div class="empty-msg">No notifications in history.</div>
-        <?php endif; ?>
+    <?php include 'header.php'; ?>
+    <div class="history-container">
+        <h2>Full History</h2>
+        <div class="history-section">
+            <h3>All Notifications</h3>
+            <?php if (!empty($all_notifications)): ?>
+                <ul class="history-list">
+                    <?php foreach ($all_notifications as $notif): ?>
+                        <li class="history-item">
+                            <div><?php echo htmlspecialchars($notif['message']); ?>
+                                <?php if ($notif['deleted']): ?><span class="deleted-label">[Deleted]</span><?php endif; ?>
+                            </div>
+                            <div class="history-meta">Type: <?php echo htmlspecialchars($notif['type']); ?> | <?php echo htmlspecialchars($notif['created_at']); ?></div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <div class="empty-msg">No notifications in history.</div>
+            <?php endif; ?>
+        </div>
+        <div class="history-section">
+            <h3>All Requests Sent</h3>
+            <?php if (!empty($all_requests_sent)): ?>
+                <ul class="history-list">
+                    <?php foreach ($all_requests_sent as $req): ?>
+                        <li class="history-item">
+                            <div>To: <b><?php echo htmlspecialchars($req['receiver_email']); ?></b>
+                                <?php if ($req['deleted']): ?><span class="deleted-label">[Deleted]</span><?php endif; ?>
+                            </div>
+                            <div>Service: <b><?php echo htmlspecialchars($req['service']); ?></b></div>
+                            <div>Status: <?php echo htmlspecialchars($req['status']); ?></div>
+                            <div class="history-meta"><?php echo htmlspecialchars($req['created_at']); ?></div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <div class="empty-msg">No requests sent in history.</div>
+            <?php endif; ?>
+        </div>
+        <div class="history-section">
+            <h3>All Requests Received</h3>
+            <?php if (!empty($all_requests_received)): ?>
+                <ul class="history-list">
+                    <?php foreach ($all_requests_received as $req): ?>
+                        <li class="history-item">
+                            <div>From: <b><?php echo htmlspecialchars($req['sender_email']); ?></b>
+                                <?php if ($req['deleted']): ?><span class="deleted-label">[Deleted]</span><?php endif; ?>
+                            </div>
+                            <div>Service: <b><?php echo htmlspecialchars($req['service']); ?></b></div>
+                            <div>Status: <?php echo htmlspecialchars($req['status']); ?></div>
+                            <div class="history-meta"><?php echo htmlspecialchars($req['created_at']); ?></div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <div class="empty-msg">No requests received in history.</div>
+            <?php endif; ?>
+        </div>
     </div>
-    <div class="history-section">
-        <h3>All Requests Sent</h3>
-        <?php if (!empty($all_requests_sent)): ?>
-            <ul class="history-list">
-                <?php foreach ($all_requests_sent as $req): ?>
-                    <li class="history-item">
-                        <div>To: <b><?php echo htmlspecialchars($req['receiver_email']); ?></b>
-                            <?php if ($req['deleted']): ?><span class="deleted-label">[Deleted]</span><?php endif; ?>
-                        </div>
-                        <div>Service: <b><?php echo htmlspecialchars($req['service']); ?></b></div>
-                        <div>Status: <?php echo htmlspecialchars($req['status']); ?></div>
-                        <div class="history-meta"><?php echo htmlspecialchars($req['created_at']); ?></div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <div class="empty-msg">No requests sent in history.</div>
-        <?php endif; ?>
-    </div>
-    <div class="history-section">
-        <h3>All Requests Received</h3>
-        <?php if (!empty($all_requests_received)): ?>
-            <ul class="history-list">
-                <?php foreach ($all_requests_received as $req): ?>
-                    <li class="history-item">
-                        <div>From: <b><?php echo htmlspecialchars($req['sender_email']); ?></b>
-                            <?php if ($req['deleted']): ?><span class="deleted-label">[Deleted]</span><?php endif; ?>
-                        </div>
-                        <div>Service: <b><?php echo htmlspecialchars($req['service']); ?></b></div>
-                        <div>Status: <?php echo htmlspecialchars($req['status']); ?></div>
-                        <div class="history-meta"><?php echo htmlspecialchars($req['created_at']); ?></div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <div class="empty-msg">No requests received in history.</div>
-        <?php endif; ?>
-    </div>
-</div>
-<?php include 'footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html> 

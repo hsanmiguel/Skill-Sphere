@@ -1,6 +1,8 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
     header("Location: entry/sign_in.php");
     exit();
 }
@@ -194,9 +196,10 @@ if ($isAjax && $_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Trash / History - Skill Sphere</title>
-    <link rel="stylesheet" href="designs/footer.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash - Skill Sphere</title>
     <link rel="stylesheet" href="designs/header1.css">
+    <link rel="stylesheet" href="designs/footer.css">
     <style>
         body { background: #f6f7f9; }
         .trash-container { max-width: 900px; margin: 40px auto 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 36px 32px; }
@@ -252,86 +255,86 @@ if ($isAjax && $_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-<?php include 'header.php'; ?>
-<div class="trash-container">
-    <h2>Trash / History</h2>
-    <?php if ($modal_feedback): ?>
-        <div class="modal-feedback"><?php echo htmlspecialchars($modal_feedback); ?></div>
-    <?php endif; ?>
-    <div class="trash-section">
-        <h3>Deleted Notifications</h3>
-        <?php if (!empty($deleted_notifications)): ?>
-            <ul class="trash-list">
-                <?php foreach ($deleted_notifications as $notif): ?>
-                    <li class="trash-item">
-                        <div><?php echo htmlspecialchars($notif['message']); ?></div>
-                        <div class="trash-meta">Type: <?php echo htmlspecialchars($notif['type']); ?> | <?php echo htmlspecialchars($notif['created_at']); ?></div>
-                        <div class="trash-actions">
-                            <form method="POST" style="display:inline;">
-                                <input type="hidden" name="item_id" value="<?php echo $notif['id']; ?>">
-                                <input type="hidden" name="item_type" value="notification">
-                                <button type="submit" name="action" value="restore" class="restore-btn">⟲ Restore</button>
-                                <button type="submit" name="action" value="delete_permanent" class="delete-perm-btn">🗑️ Delete Permanently</button>
-                            </form>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <div class="empty-msg">No deleted notifications.</div>
+    <?php include 'header.php'; ?>
+    <div class="trash-container">
+        <h2>Trash / History</h2>
+        <?php if ($modal_feedback): ?>
+            <div class="modal-feedback"><?php echo htmlspecialchars($modal_feedback); ?></div>
         <?php endif; ?>
+        <div class="trash-section">
+            <h3>Deleted Notifications</h3>
+            <?php if (!empty($deleted_notifications)): ?>
+                <ul class="trash-list">
+                    <?php foreach ($deleted_notifications as $notif): ?>
+                        <li class="trash-item">
+                            <div><?php echo htmlspecialchars($notif['message']); ?></div>
+                            <div class="trash-meta">Type: <?php echo htmlspecialchars($notif['type']); ?> | <?php echo htmlspecialchars($notif['created_at']); ?></div>
+                            <div class="trash-actions">
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="item_id" value="<?php echo $notif['id']; ?>">
+                                    <input type="hidden" name="item_type" value="notification">
+                                    <button type="submit" name="action" value="restore" class="restore-btn">⟲ Restore</button>
+                                    <button type="submit" name="action" value="delete_permanent" class="delete-perm-btn">🗑️ Delete Permanently</button>
+                                </form>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <div class="empty-msg">No deleted notifications.</div>
+            <?php endif; ?>
+        </div>
+        <div class="trash-section">
+            <h3>Deleted Requests Sent</h3>
+            <?php if (!empty($deleted_requests_sent)): ?>
+                <ul class="trash-list">
+                    <?php foreach ($deleted_requests_sent as $req): ?>
+                        <li class="trash-item">
+                            <div>To: <b><?php echo htmlspecialchars($req['receiver_email']); ?></b></div>
+                            <div>Service: <b><?php echo htmlspecialchars($req['service']); ?></b></div>
+                            <div>Status: <?php echo htmlspecialchars($req['status']); ?></div>
+                            <div class="trash-meta"><?php echo htmlspecialchars($req['created_at']); ?></div>
+                            <div class="trash-actions">
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="item_id" value="<?php echo $req['id']; ?>">
+                                    <input type="hidden" name="item_type" value="request">
+                                    <button type="submit" name="action" value="restore" class="restore-btn">⟲ Restore</button>
+                                    <button type="submit" name="action" value="delete_permanent" class="delete-perm-btn">🗑️ Delete Permanently</button>
+                                </form>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <div class="empty-msg">No deleted requests sent.</div>
+            <?php endif; ?>
+        </div>
+        <div class="trash-section">
+            <h3>Deleted Requests Received</h3>
+            <?php if (!empty($deleted_requests_received)): ?>
+                <ul class="trash-list">
+                    <?php foreach ($deleted_requests_received as $req): ?>
+                        <li class="trash-item">
+                            <div>From: <b><?php echo htmlspecialchars($req['sender_email']); ?></b></div>
+                            <div>Service: <b><?php echo htmlspecialchars($req['service']); ?></b></div>
+                            <div>Status: <?php echo htmlspecialchars($req['status']); ?></div>
+                            <div class="trash-meta"><?php echo htmlspecialchars($req['created_at']); ?></div>
+                            <div class="trash-actions">
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="item_id" value="<?php echo $req['id']; ?>">
+                                    <input type="hidden" name="item_type" value="request">
+                                    <button type="submit" name="action" value="restore" class="restore-btn">⟲ Restore</button>
+                                    <button type="submit" name="action" value="delete_permanent" class="delete-perm-btn">🗑️ Delete Permanently</button>
+                                </form>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <div class="empty-msg">No deleted requests received.</div>
+            <?php endif; ?>
+        </div>
     </div>
-    <div class="trash-section">
-        <h3>Deleted Requests Sent</h3>
-        <?php if (!empty($deleted_requests_sent)): ?>
-            <ul class="trash-list">
-                <?php foreach ($deleted_requests_sent as $req): ?>
-                    <li class="trash-item">
-                        <div>To: <b><?php echo htmlspecialchars($req['receiver_email']); ?></b></div>
-                        <div>Service: <b><?php echo htmlspecialchars($req['service']); ?></b></div>
-                        <div>Status: <?php echo htmlspecialchars($req['status']); ?></div>
-                        <div class="trash-meta"><?php echo htmlspecialchars($req['created_at']); ?></div>
-                        <div class="trash-actions">
-                            <form method="POST" style="display:inline;">
-                                <input type="hidden" name="item_id" value="<?php echo $req['id']; ?>">
-                                <input type="hidden" name="item_type" value="request">
-                                <button type="submit" name="action" value="restore" class="restore-btn">⟲ Restore</button>
-                                <button type="submit" name="action" value="delete_permanent" class="delete-perm-btn">🗑️ Delete Permanently</button>
-                            </form>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <div class="empty-msg">No deleted requests sent.</div>
-        <?php endif; ?>
-    </div>
-    <div class="trash-section">
-        <h3>Deleted Requests Received</h3>
-        <?php if (!empty($deleted_requests_received)): ?>
-            <ul class="trash-list">
-                <?php foreach ($deleted_requests_received as $req): ?>
-                    <li class="trash-item">
-                        <div>From: <b><?php echo htmlspecialchars($req['sender_email']); ?></b></div>
-                        <div>Service: <b><?php echo htmlspecialchars($req['service']); ?></b></div>
-                        <div>Status: <?php echo htmlspecialchars($req['status']); ?></div>
-                        <div class="trash-meta"><?php echo htmlspecialchars($req['created_at']); ?></div>
-                        <div class="trash-actions">
-                            <form method="POST" style="display:inline;">
-                                <input type="hidden" name="item_id" value="<?php echo $req['id']; ?>">
-                                <input type="hidden" name="item_type" value="request">
-                                <button type="submit" name="action" value="restore" class="restore-btn">⟲ Restore</button>
-                                <button type="submit" name="action" value="delete_permanent" class="delete-perm-btn">🗑️ Delete Permanently</button>
-                            </form>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <div class="empty-msg">No deleted requests received.</div>
-        <?php endif; ?>
-    </div>
-</div>
-<?php include 'footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html> 

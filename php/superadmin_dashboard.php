@@ -80,21 +80,7 @@ if (isset($_POST['update_role'])) {
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo-container">
-            <a href="home_page.php" style="text-decoration: none; font-weight: bold; color: #333;"><img src="assets/logo_ss.png" alt="Skill Sphere Logo" class="logo"></a>
-            <h1>Skill Sphere</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="home_page.php">HOME</a></li>
-                <li><a href="services.php">SERVICES</a></li>
-                <li><a href="about_us.php">ABOUT</a></li>
-                <li><a href="contact_us.php">CONTACT US</a></li>
-                <li><a href="superadmin_dashboard.php" class="active">SUPER ADMIN</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include 'header.php'; ?>
     <main style="max-width:1100px;margin:40px auto;padding:40px;background:#fff;border-radius:18px;box-shadow:0 4px 24px rgba(0,0,0,0.07);">
         <h1 style="color:#1B4D43;">Welcome, Super Admin!</h1>
         <p style="font-size:1.2rem;">You have full access to all system management features.</p>

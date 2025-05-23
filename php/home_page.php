@@ -20,50 +20,14 @@ if (isset($_POST['logout'])) {
     <link rel="stylesheet" href="designs/header1.css">
 </head>
 <body>
-    <header>
-        <div class="logo-container">
-            <a href="home_page.php" style="text-decoration: none; font-weight: bold; color: #333;"><img src="assets/logo_ss.png" alt="Skill Sphere Logo" class="logo"></a>
-            <h1>Skill Sphere</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="home_page.php" class="active">HOME</a></li>
-                <li><a href="services.php">SERVICES</a></li>
-                <li><a href="about_us.php">ABOUT</a></li>
-                <li><a href="contact_us.php">CONTACT US</a></li>
-                <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "superadmin"): ?>
-                  <li><a href="superadmin_dashboard.php">SUPER ADMIN</a></li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-        <?php if (isset($_SESSION["user_id"])): ?>
-          <div class="user-info" style="margin-left:auto; display: flex; align-items: center; gap: 18px; font-weight:600; color:#1B4D43; padding-left: 20px;">
-            <a href="user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none; display: flex; align-items: center; gap: 6px;">
-              <span style="display:inline-flex; align-items:center;">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="vertical-align:middle; margin-right:6px;" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="10" cy="7" r="4" fill="#1B4D43"/>
-                  <ellipse cx="10" cy="15" rx="7" ry="4" fill="#1B4D43"/>
-                </svg>
-                <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
-              </span>
-            </a>
-            <form method="post" action="" style="display:inline; margin:0;">
-              <button type="submit" name="logout" style="margin-left:10px; background: linear-gradient(135deg, #e53935 0%, #ffb733 100%); color: #fff; border: none; border-radius: 20px; padding: 8px 18px; font-weight: 600; cursor: pointer;">Logout</button>
-            </form>
-          </div>
-        <?php else: ?>
-          <div class="join-button">
-            <a href="entry/sign_up.php" class="btn">JOIN US!</a>
-          </div>
-        <?php endif; ?>
-    </header>
+    <?php include 'header.php'; ?>
     <main>
         <section class="hero">
             <div class="hero-content">
                 <div class="since">SINCE 2025</div>
-                <h2>EXPERIENCE FINDING <span class="skilled-key">SKILLED PERSONNEL</span> WITH<br> JUST A CLICK!</h2>
+                <h2>EXPERIENCE FINDING <span class="skilled-key">SKILLED PERSONNEL</span> WITH JUST A CLICK!</h2>
                 <p>Skill Sphere is your go-to platform for finding skilled workers effortlessly. Whether you need a plumber, tutor, designer, or any service, our mission is to connect you with experienced professionals—fast, reliable, and just a click away.</p>
-                <a href="entry/sign_up.php" class="btn get-started">
+                <a href="entry/sign_up.php" class="get-started">
                     <div class="circle-icon">
                         <img src="assets/arrow_back.png" alt="Arrow Icon">
                     </div>
@@ -72,60 +36,39 @@ if (isset($_POST['logout'])) {
             </div>
         </section>
         <section class="what-we-offer">
-            <h2>WHAT WE OFFER</h2>
-            <div class="offer-container">
-                <div class="illustration">
-                    <img src="assets/offerings.png" alt="Various professionals illustration">
-                </div>
-                <div class="services-list">
-                    <?php 
-                    $services = [
-                        [
-                            'icon' => 'fa-user',
-                            'title' => 'Personalized service provider profiles with skills, contact info, and experience',
-                            'image' => 'assets/user_icon.png'
-                        ],
-                        [
-                            'icon' => 'fa-search',
-                            'title' => 'Customize query searches based on type of service',
-                            'image'=> 'assets/search.png'
-                        ],
-                        [
-                            'icon' => 'fa-location-dot',
-                            'title' => 'Location-based features to connect users with nearby providers',
-                            'image'=> 'assets/location.png'
-                        ],
-                        [
-                            'icon' => 'fa-comments',
-                            'title' => 'Integrated system for direct communication',
-                            'image'=> 'assets/thumbs_up.png'
-                        ],
-                        [
-                            'icon' => 'fa-check-circle',
-                            'title' => 'Transparent feedback system',
-                            'image'=> 'assets/check_circle.png'
-                        ],
-                        [
-                            'icon' => 'fa-bell',
-                            'title' => 'Transaction tracking for easy history viewing',
-                            'image'=> 'assets/bell.png'
-                        ],
-                        [
-                            'icon' => 'fa-bookmark',
-                            'title' => 'Bookmark and filter favorites for future convenience',
-                            'image'=> 'assets/bookmark.png'
-                        ]
-                    ];
-                    foreach ($services as $service): ?>
-                        <div class="service-item">
-                            <div class="service-icon">
-                                <img src="<?php echo $service['image']; ?>" alt="Service Icon">
-                            </div>
-                            <div class="service-description">
-                                <?php echo $service['title']; ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+            <div class="what-we-offer-inner">
+                <h2>WHAT WE OFFER</h2>
+                <div class="offer-features-grid">
+                    <div class="offer-feature">
+                        <img src="assets/user_icon.png" alt="User Profile">
+                        <h3 class="offer-feature-title">Personalized Profiles</h3>
+                        <p class="offer-feature-desc">Detailed service provider profiles with skills, contact info, and experience</p>
+                    </div>
+                    <div class="offer-feature">
+                        <img src="assets/search.png" alt="Search">
+                        <h3 class="offer-feature-title">Custom Search</h3>
+                        <p class="offer-feature-desc">Customize query searches based on type of service</p>
+                    </div>
+                    <div class="offer-feature">
+                        <img src="assets/location.png" alt="Location">
+                        <h3 class="offer-feature-title">Location Based</h3>
+                        <p class="offer-feature-desc">Connect with nearby service providers</p>
+                    </div>
+                    <div class="offer-feature">
+                        <img src="assets/thumbs_up.png" alt="Communication">
+                        <h3 class="offer-feature-title">Direct Communication</h3>
+                        <p class="offer-feature-desc">Integrated system for direct messaging</p>
+                    </div>
+                    <div class="offer-feature">
+                        <img src="assets/check_circle.png" alt="Feedback">
+                        <h3 class="offer-feature-title">Feedback System</h3>
+                        <p class="offer-feature-desc">Transparent rating and review system</p>
+                    </div>
+                    <div class="offer-feature">
+                        <img src="assets/bell.png" alt="Tracking">
+                        <h3 class="offer-feature-title">Transaction Tracking</h3>
+                        <p class="offer-feature-desc">Easy history viewing and management</p>
+                    </div>
                 </div>
             </div>
         </section>

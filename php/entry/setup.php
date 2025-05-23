@@ -1,9 +1,14 @@
+<?php
+include_once '../service_categories.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skill Sphere Profile</title>
+  <link rel="stylesheet" href="../designs/shared.css">
   <link rel="stylesheet" href="../designs/footer.css">
   <link rel="stylesheet" href="../designs/setup1.css">
   <link rel="stylesheet" href="../designs/header1.css">
@@ -41,97 +46,123 @@
     .popup-close:hover {
       background: #ec971f;
     }
+    /* Fallback/fix for header user info and logout button */
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-weight: 600;
+      color: #1B4D43;
+      padding-left: 20px;
+    }
+    .user-link {
+      color: #1B4D43;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .user-icon-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .logout-form {
+      display: inline;
+      margin: 0;
+    }
+    .logout-btn {
+      margin-left: 10px;
+      background: linear-gradient(135deg, #e53935 0%, #ffb733 100%);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .logout-btn:hover {
+      background: linear-gradient(135deg, #ffb733 0%, #e53935 100%);
+      color: #fff;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo-container">
-      <a href="../home_page.php" style="text-decoration: none; font-weight: bold; color: #333;"><img src="../assets/logo_ss.png" alt="Skill Sphere Logo" class="logo"></a>
-      <h1>Skill Sphere</h1>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="../home_page.php">HOME</a></li>
-        <li><a href="../services.php">SERVICES</a></li>
-        <li><a href="../about_us.php">ABOUT</a></li>
-        <li><a href="../contact_us.php">CONTACT US</a></li>
-        <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "superadmin"): ?>
-          <li><a href="../superadmin_dashboard.php">SUPER ADMIN</a></li>
-        <?php endif; ?>
-      </ul>
-    </nav>
-    <div class="join-button">
-      <a href="sign_up.php" class="btn">JOIN US!</a>
-    </div>
-    <div class="user-info">
-      <a href="../user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none; display: flex; align-items: center; gap: 6px;">
-        <span style="display:inline-flex; align-items:center;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="vertical-align:middle; margin-right:6px;" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="7" r="4" fill="#1B4D43"/>
-            <ellipse cx="10" cy="15" rx="7" ry="4" fill="#1B4D43"/>
-          </svg>
-          <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
-        </span>
-      </a>
-    </div>
-  </header>
+  <?php include '../header.php'; ?>
+  <main class="section">
+    <div class="container">
+      <div class="card" style="max-width: 700px; margin: 0 auto;">
+        <h1 class="section-title" style="margin-bottom: 8px;">Almost done</h1>
+        <p style="text-align:center; margin-bottom: 32px; color: var(--text-light);">Be found by clients. Create your Skill Sphere Profile.</p>
+        <form action="server2.php" method="POST" onsubmit="prepareFormData()">
+          <div class="row" style="display: flex; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg);">
+            <input class="form-control" type="text" id="first-name" name="first-name" placeholder="First name" required>
+            <input class="form-control" type="text" id="last-name" name="last-name" placeholder="Last name" required>
+            <input class="form-control" type="text" id="mi" name="mi" placeholder="M.I">
+          </div>
 
-  <div class="form-container">
-    <h1>Almost done</h1>
-    <p>Be found by clients. Create your Skill Sphere Profile.</p>
-    <form action="server2.php" method="POST" onsubmit="prepareFormData()">
-      <div class="row">
-        <input type="text" id="first-name" name="first-name" placeholder="First name" required>
-        <input type="text" id="last-name" name="last-name" placeholder="Last name" required>
-        <input type="text" id="mi" name="mi" placeholder="M.I">
+          <div class="form-group">
+            <label for="birthdate">Birthdate</label>
+            <input class="form-control" type="date" id="birthdate" name="birthdate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input class="form-control" type="text" id="address" name="address" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone-number">Phone Number</label>
+            <input class="form-control" type="text" id="phone-number" name="phone-number" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="social-media">Social Media Account</label>
+            <input class="form-control" type="text" id="social-media" name="social-media">
+          </div>
+
+          <div class="form-group" style="display: flex; align-items: center; gap: var(--spacing-md);">
+            <label for="experience" style="margin-bottom: 0;">Years of Experience</label>
+            <input class="form-control" style="max-width: 100px;" type="number" id="experience" name="experience" min="0" max="50" placeholder="0" required>
+            <span>years</span>
+          </div>
+
+          <div class="form-group skills-section">
+            <label for="skills">Skills & Services</label>
+            <button type="button" class="btn btn-accent" onclick="openPopup()">ADD</button>
+          </div>
+
+          <!-- Hidden fields to store dynamic input -->
+          <input type="hidden" name="skills" id="skills-hidden">
+          <input type="hidden" name="selected-service" id="selected-service-hidden">
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-lg);">Save & Continue</button>
+        </form>
       </div>
-
-      <label for="birthdate">Birthdate</label>
-      <input type="date" id="birthdate" name="birthdate" style="width: 220px;" required>
-
-      <label for="address">Address</label>
-      <input type="text" id="address" name="address" style="width: 513px;" required>
-
-      <label for="phone-number">Phone Number</label>
-      <input type="text" id="phone-number" name="phone-number" style="width: 300px;" required>
-
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" style="width: 350px;" required>
-
-      <label for="social-media">Social Media Account</label>
-      <input type="text" id="social-media" name="social-media" style="width: 450px;">
-
-      <label for="experience">Years of Experience</label>
-      <div class="experience-container">
-        <input type="number" id="experience" name="experience" min="0" max="50" placeholder="0" required>
-        <span>years</span>
-      </div>
-
-      <div class="skills-section">
-        <label for="skills">Skills & Services</label>
-        <button type="button" onclick="openPopup()">ADD</button>
-      </div>
-
-      <!-- Hidden fields to store dynamic input -->
-      <input type="hidden" name="skills" id="skills-hidden">
-      <input type="hidden" name="selected-service" id="selected-service-hidden">
-
-      <button type="submit">Save & Continue</button>
-    </form>
-  </div>
+    </div>
+  </main>
 
   <?php include '../footer.php'; ?>
 
   <!-- Popup -->
-  <div id="popup-overlay" class="popup-overlay">
-    <div class="popup-content">
-      <h2>Add to your profile</h2>
-      <hr>
+  <div id="popup-overlay" class="popup-overlay" style="display:none; align-items: center; justify-content: center;">
+    <div class="popup-content card" style="width: 380px; max-width: 96vw; max-height: 80vh; min-width: 0; position: relative; padding: 18px 18px 0 18px; margin: 0 auto; border-radius: 18px; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
+      <h2 class="section-title" style="font-size: var(--text-2xl); margin-bottom: 0;">Add to your profile</h2>
+      <hr style="margin: var(--spacing-lg) 0;">
 
       <div class="popup-section">
-        <h3>Let's add your skills</h3>
-        <p>Your listed skills help us connect you with clients who need your services.</p>
-        <div id="skills-checkboxes" style="display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto; border: 1px solid #bbb; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+        <h3 style="font-size: var(--text-xl); font-weight: var(--font-bold);">Let's add your skills</h3>
+        <p style="color: var(--text-light);">Your listed skills help us connect you with clients who need your services.</p>
+        <div id="skills-checkboxes" style="display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto; border: 1px solid #bbb; border-radius: 8px; padding: 10px; background: var(--surface-hover);">
           <label><input type="checkbox" value="Plumbing"> 🔩 Plumbing</label>
           <label><input type="checkbox" value="Carpentry"> 🪚 Carpentry</label>
           <label><input type="checkbox" value="Electrical Work"> ⚡ Electrical Work</label>
@@ -235,10 +266,10 @@
         </div>
       </div>
 
-      <div class="popup-section">
-        <h3>Let's add your services</h3>
-        <p>Your listed services help us connect you with clients who need your services.</p>
-        <div id="services-checkboxes" style="display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto; border: 1px solid #bbb; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+      <div class="popup-section" style="margin-top: var(--spacing-xl);">
+        <h3 style="font-size: var(--text-xl); font-weight: var(--font-bold);">Let's add your services</h3>
+        <p style="color: var(--text-light);">Your listed services help us connect you with clients who need your services.</p>
+        <div id="services-checkboxes" style="display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto; border: 1px solid #bbb; border-radius: 8px; padding: 10px; background: var(--surface-hover);">
           <?php foreach ($categories as $label => $services): ?>
               <strong><?php echo htmlspecialchars($label); ?></strong>
               <?php foreach ($services as $service): ?>
@@ -248,9 +279,9 @@
         </div>
       </div>
 
-      <hr>
-      <div class="popup-footer">
-      <button class="popup-close" onclick="closePopup()">Continue</button>
+      <hr style="margin: var(--spacing-lg) 0;">
+      <div class="popup-footer" style="display: flex; justify-content: flex-end; background: none; border-top: none;">
+        <button class="btn btn-accent popup-close" onclick="closePopup()">Continue</button>
       </div>
     </div>
   </div>

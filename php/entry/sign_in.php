@@ -1,11 +1,5 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-if (isset($_POST['logout'])) {
-    session_unset();
-    session_destroy();
-    header("Location: sign_in.php");
-    exit();
-}
 
 // DB connection
 $conn = new mysqli("localhost", "root", "", "registered_accounts");
@@ -95,6 +89,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $stmt->close();
     }
+}
+
+// Handle logout
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header("Location: sign_in.php");
+    exit();
 }
 
 $conn->close();
