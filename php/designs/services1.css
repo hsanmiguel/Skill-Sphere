@@ -389,42 +389,6 @@ nav ul li a.active {
   border-color: #ffb733;
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: 30px;
-  background: linear-gradient(135deg, var(--teal-main) 0%, var(--teal-light) 100%);
-  color: white;
-  margin-top: auto;
-  flex-shrink: 0;
-  box-shadow: 0 -4px 32px rgba(74,155,142,0.10);
-}
-
-footer a {
-  color: #ffa500;
-  text-decoration: none;
-  margin: 0 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-footer a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #ffa500;
-  transition: width 0.3s ease;
-}
-
-footer a:hover::after {
-  width: 100%;
-}
-
 /* Responsive Design */
 @media (max-width: 900px) {
   .search-bar-container {

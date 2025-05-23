@@ -115,4 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: contact.php");
     exit;
 }
+
+// Include the shared footer
+include 'php/footer.php';
 ?>

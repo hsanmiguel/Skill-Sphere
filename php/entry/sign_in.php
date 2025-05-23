@@ -1,5 +1,11 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header("Location: sign_in.php");
+    exit();
+}
 
 // DB connection
 $conn = new mysqli("localhost", "root", "", "registered_accounts");
@@ -32,19 +38,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // If no errors, verify credentials
     if (empty($emailErr) && empty($passwordErr)) {
-        $stmt = $conn->prepare("SELECT id, password FROM users WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id, password, role FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows == 1) {
-            $stmt->bind_result($user_id, $hashedPassword);
+            $stmt->bind_result($user_id, $hashedPassword, $role);
             $stmt->fetch();
 
             if (password_verify($password, $hashedPassword)) {
                 // Save session variables
                 $_SESSION["user_id"] = $user_id;
                 $_SESSION["email"] = $email;
+                $_SESSION["role"] = $role;
+                $_SESSION['welcome_popup'] = 'Welcome back! You have successfully signed in.';
             
                 // Fetch first name from user_profiles
                 $firstName = "";
@@ -63,12 +71,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $profileCheckStmt->store_result();
 
                 if ($profileCheckStmt->num_rows > 0) {
-                    // Profile exists, redirect to homepage/dashboard
-                    header("Location: ../home_page.php");
+                    if ($role === 'superadmin') {
+                        header("Location: ../superadmin_dashboard.php");
+                    } else {
+                        header("Location: ../home_page.php");
+                    }
                     exit();
                 } else {
-                    // No profile, redirect to setup
-                    header("Location: ../entry/setup.php");
+                    if ($role === 'superadmin') {
+                        header("Location: ../superadmin_dashboard.php");
+                    } else {
+                        header("Location: ../entry/setup.php");
+                    }
                     exit();
                 }
             } else {
@@ -83,14 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-// Handle logout
-if (isset($_POST['logout'])) {
-    session_unset();
-    session_destroy();
-    header("Location: sign_in.php");
-    exit();
-}
-
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -99,8 +105,22 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skill Sphere - Sign in</title>
+    <link rel="stylesheet" href="../designs/footer.css">
     <link rel="stylesheet" href="../designs/sign_in1.css?v=1.2">
     <link rel="stylesheet" href="../designs/header1.css">
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
 </head>
 <body>
 <header>
@@ -114,12 +134,21 @@ $conn->close();
       <li><a href="../services.php">SERVICES</a></li>
       <li><a href="../about_us.php">ABOUT</a></li>
       <li><a href="../contact_us.php">CONTACT US</a></li>
+      <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "superadmin"): ?>
+        <li><a href="../superadmin_dashboard.php">SUPER ADMIN</a></li>
+      <?php endif; ?>
     </ul>
   </nav>
   <?php if (isset($_SESSION["user_id"])): ?>
     <div class="user-info" style="margin-left:auto; display: flex; align-items: center; gap: 18px; font-weight:600; color:#1B4D43; padding-left: 20px;">
-      <a href="../user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none;">
-        <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
+      <a href="../user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none; display: flex; align-items: center; gap: 6px;">
+        <span style="display:inline-flex; align-items:center;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="vertical-align:middle; margin-right:6px;" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="7" r="4" fill="#1B4D43"/>
+            <ellipse cx="10" cy="15" rx="7" ry="4" fill="#1B4D43"/>
+          </svg>
+          <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
+        </span>
       </a>
       <form method="post" action="" style="display:inline; margin:0;">
         <button type="submit" name="logout" style="margin-left:10px; background: linear-gradient(135deg, #e53935 0%, #ffb733 100%); color: #fff; border: none; border-radius: 20px; padding: 8px 18px; font-weight: 600; cursor: pointer;">Logout</button>
@@ -132,8 +161,8 @@ $conn->close();
   <?php endif; ?>
 </header>
 
-
-<div class="form-container">
+<div class="main-content">
+  <div class="form-container">
     <h2>Sign in</h2>
     <form method="POST">
         <label for="email">Email address</label>
@@ -151,12 +180,9 @@ $conn->close();
     <div class="footer-text">
         Don't have an account? <a href="sign_up.php">Register</a>
     </div>
+  </div>
 </div>
 
-<div class="footer-links">
-    <a href="#">Security & Privacy</a>
-    <a href="#">Terms & Conditions</a>
-    <a href="../contact_us.php">Contact</a>
-</div>
+<?php include '../footer.php'; ?>
 </body>
 </html>

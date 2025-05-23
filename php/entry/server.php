@@ -67,9 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Hash the password and insert new user
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $insertQuery = "INSERT INTO users (email, password) VALUES (?, ?)";
+            $insertQuery = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
+            $defaultRole = 'user';
             $insertStmt = $conn->prepare($insertQuery);
-            $insertStmt->bind_param("ss", $email, $hashed_password);
+            $insertStmt->bind_param("sss", $email, $hashed_password, $defaultRole);
 
             if ($insertStmt->execute()) {
                 $_SESSION['message'] = "Registration successful! You can now log in.";
@@ -96,4 +97,3 @@ function test_input($data) {
 
 // Close the database connection
 $conn->close();
-?>

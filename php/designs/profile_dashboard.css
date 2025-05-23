@@ -186,39 +186,6 @@ body {
   color: #ffa500;
 }
 
-footer {
-  text-align: center;
-  padding: 30px 0 10px 0;
-  background: linear-gradient(135deg, #1B4D43 0%, #2a6a5d 100%);
-  color: white;
-  margin-top: 40px;
-}
-.footer-links {
-  margin-bottom: 10px;
-}
-.footer-links a {
-  color: #ffa500;
-  margin: 0 20px;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-}
-.footer-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #ffa500;
-  transition: width 0.3s ease;
-}
-.footer-links a:hover::after {
-  width: 100%;
-}
-
 @media (max-width: 1100px) {
   .dashboard-main {
     flex-direction: column;

@@ -4,8 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skill Sphere Profile</title>
+  <link rel="stylesheet" href="../designs/footer.css">
   <link rel="stylesheet" href="../designs/setup1.css">
   <link rel="stylesheet" href="../designs/header1.css">
+  <style>
+    .popup-content {
+      max-width: 600px;
+      width: 90vw;
+      min-width: 320px;
+      position: relative;
+      padding-bottom: 0;
+    }
+    #skills-checkboxes, #services-checkboxes {
+      min-width: 0;
+    }
+    .popup-footer {
+      position: static;
+      padding: 0;
+      background: none;
+      border-top: none;
+      justify-content: flex-end;
+    }
+    .popup-close {
+      min-width: 100px;
+      font-size: 1em;
+      font-weight: 600;
+      background: #f0ad4e;
+      color: #1c4f47;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      transition: background 0.2s;
+    }
+    .popup-close:hover {
+      background: #ec971f;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -19,10 +55,24 @@
         <li><a href="../services.php">SERVICES</a></li>
         <li><a href="../about_us.php">ABOUT</a></li>
         <li><a href="../contact_us.php">CONTACT US</a></li>
+        <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "superadmin"): ?>
+          <li><a href="../superadmin_dashboard.php">SUPER ADMIN</a></li>
+        <?php endif; ?>
       </ul>
     </nav>
     <div class="join-button">
       <a href="sign_up.php" class="btn">JOIN US!</a>
+    </div>
+    <div class="user-info">
+      <a href="../user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none; display: flex; align-items: center; gap: 6px;">
+        <span style="display:inline-flex; align-items:center;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="vertical-align:middle; margin-right:6px;" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="7" r="4" fill="#1B4D43"/>
+            <ellipse cx="10" cy="15" rx="7" ry="4" fill="#1B4D43"/>
+          </svg>
+          <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
+        </span>
+      </a>
     </div>
   </header>
 
@@ -35,6 +85,9 @@
         <input type="text" id="last-name" name="last-name" placeholder="Last name" required>
         <input type="text" id="mi" name="mi" placeholder="M.I">
       </div>
+
+      <label for="birthdate">Birthdate</label>
+      <input type="date" id="birthdate" name="birthdate" style="width: 220px;" required>
 
       <label for="address">Address</label>
       <input type="text" id="address" name="address" style="width: 513px;" required>
@@ -67,12 +120,7 @@
     </form>
   </div>
 
-  <div class="footer-links">
-    <a href="#">Security & Privacy</a>
-    <a href="#">Terms & Conditions</a>
-    <a href="#">Contact</a>
-    <p>© 2025 Skill Sphere. All rights reserved.</p>
-  </div>
+  <?php include '../footer.php'; ?>
 
   <!-- Popup -->
   <div id="popup-overlay" class="popup-overlay">
@@ -83,72 +131,127 @@
       <div class="popup-section">
         <h3>Let's add your skills</h3>
         <p>Your listed skills help us connect you with clients who need your services.</p>
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <input type="text" id="skill-input" placeholder="Type a skill" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-          <button class="popup-button" onclick="addSkill()">+ ADD SKILL</button>
+        <div id="skills-checkboxes" style="display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto; border: 1px solid #bbb; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+          <label><input type="checkbox" value="Plumbing"> 🔩 Plumbing</label>
+          <label><input type="checkbox" value="Carpentry"> 🪚 Carpentry</label>
+          <label><input type="checkbox" value="Electrical Work"> ⚡ Electrical Work</label>
+          <label><input type="checkbox" value="Painting"> 🎨 Painting</label>
+          <label><input type="checkbox" value="Tiling"> 🧱 Tiling</label>
+          <label><input type="checkbox" value="Roofing"> 🏠 Roofing</label>
+          <label><input type="checkbox" value="Masonry"> 🛠️ Masonry</label>
+          <label><input type="checkbox" value="Welding"> 🔥 Welding</label>
+          <label><input type="checkbox" value="Auto Repair"> 🚗 Auto Repair</label>
+          <label><input type="checkbox" value="Motorcycle Repair"> 🏍️ Motorcycle Repair</label>
+          <label><input type="checkbox" value="Appliance Repair"> 🔌 Appliance Repair</label>
+          <label><input type="checkbox" value="Furniture Assembly"> 🪑 Furniture Assembly</label>
+          <label><input type="checkbox" value="Locksmithing"> 🔑 Locksmithing</label>
+          <label><input type="checkbox" value="Glass Cutting"> 🔪 Glass Cutting</label>
+          <label><input type="checkbox" value="Floor Installation"> 🪵 Floor Installation</label>
+          <label><input type="checkbox" value="Drywall Repair"> 🛠️ Drywall Repair</label>
+          <label><input type="checkbox" value="HVAC Repair"> ❄️ HVAC Repair</label>
+          <label><input type="checkbox" value="Gutter Cleaning"> 🧹 Gutter Cleaning</label>
+          <label><input type="checkbox" value="Pest Control"> 🐜 Pest Control</label>
+          <label><input type="checkbox" value="Septic Tank Cleaning"> 🚽 Septic Tank Cleaning</label>
+          <label><input type="checkbox" value="House Cleaning"> 🏠 House Cleaning</label>
+          <label><input type="checkbox" value="Deep Cleaning"> 🧼 Deep Cleaning</label>
+          <label><input type="checkbox" value="Window Cleaning"> 🪟 Window Cleaning</label>
+          <label><input type="checkbox" value="Laundry and Ironing"> 👕 Laundry and Ironing</label>
+          <label><input type="checkbox" value="Carpet Cleaning"> 🧽 Carpet Cleaning</label>
+          <label><input type="checkbox" value="Pressure Washing"> 💦 Pressure Washing</label>
+          <label><input type="checkbox" value="Pool Cleaning"> 🏊 Pool Cleaning</label>
+          <label><input type="checkbox" value="Organizing (Decluttering)"> 📦 Organizing (Decluttering)</label>
+          <label><input type="checkbox" value="Trash Removal"> 🗑️ Trash Removal</label>
+          <label><input type="checkbox" value="Upholstery Cleaning"> 🛋️ Upholstery Cleaning</label>
+          <label><input type="checkbox" value="Gardening"> 🌱 Gardening</label>
+          <label><input type="checkbox" value="Landscaping"> 🌳 Landscaping</label>
+          <label><input type="checkbox" value="Lawn Mowing"> 🌾 Lawn Mowing</label>
+          <label><input type="checkbox" value="Tree Trimming"> ✂️ Tree Trimming</label>
+          <label><input type="checkbox" value="Leaf Blowing"> 🍂 Leaf Blowing</label>
+          <label><input type="checkbox" value="Fence Installation"> 🛠️ Fence Installation</label>
+          <label><input type="checkbox" value="Pesticide Application"> 🪲 Pesticide Application</label>
+          <label><input type="checkbox" value="Sprinkler Repair"> 💧 Sprinkler Repair</label>
+          <label><input type="checkbox" value="Outdoor Painting"> 🎨 Outdoor Painting</label>
+          <label><input type="checkbox" value="Snow Removal"> ❄️ Snow Removal</label>
+          <label><input type="checkbox" value="Cooking"> 🍳 Cooking</label>
+          <label><input type="checkbox" value="Baking"> 🧁 Baking</label>
+          <label><input type="checkbox" value="Catering"> 🍽️ Catering</label>
+          <label><input type="checkbox" value="Food Plating"> 🍲 Food Plating</label>
+          <label><input type="checkbox" value="Kitchen Cleaning"> 🧽 Kitchen Cleaning</label>
+          <label><input type="checkbox" value="Barbecuing"> 🍖 Barbecuing</label>
+          <label><input type="checkbox" value="Meal Prep"> 🥗 Meal Prep</label>
+          <label><input type="checkbox" value="Juice/Smoothie Making"> 🥤 Juice/Smoothie Making</label>
+          <label><input type="checkbox" value="Butchering"> 🔪 Butchering</label>
+          <label><input type="checkbox" value="Inventory Management (Kitchen)"> 📦 Inventory Management (Kitchen)</label>
+          <label><input type="checkbox" value="Sewing"> 🧵 Sewing</label>
+          <label><input type="checkbox" value="Embroidery"> 🪡 Embroidery</label>
+          <label><input type="checkbox" value="Crochet"> 🧶 Crochet</label>
+          <label><input type="checkbox" value="Knitting"> 🧶 Knitting</label>
+          <label><input type="checkbox" value="Jewelry Repair"> 💍 Jewelry Repair</label>
+          <label><input type="checkbox" value="Shoe Repair"> 👞 Shoe Repair</label>
+          <label><input type="checkbox" value="Toy Repair"> 🧸 Toy Repair</label>
+          <label><input type="checkbox" value="Candle Making"> 🕯️ Candle Making</label>
+          <label><input type="checkbox" value="Pottery"> 🏺 Pottery</label>
+          <label><input type="checkbox" value="DIY Woodwork"> 🪵 DIY Woodwork</label>
+          <label><input type="checkbox" value="Basic Computer Repair"> 💻 Basic Computer Repair</label>
+          <label><input type="checkbox" value="Printer Setup"> 🖨️ Printer Setup</label>
+          <label><input type="checkbox" value="Wi-Fi Setup"> 📶 Wi-Fi Setup</label>
+          <label><input type="checkbox" value="Router Troubleshooting"> 📡 Router Troubleshooting</label>
+          <label><input type="checkbox" value="Smart TV Setup"> 📺 Smart TV Setup</label>
+          <label><input type="checkbox" value="CCTV Installation"> 📹 CCTV Installation</label>
+          <label><input type="checkbox" value="Alarm System Setup"> 🚨 Alarm System Setup</label>
+          <label><input type="checkbox" value="Cable Management"> 🔌 Cable Management</label>
+          <label><input type="checkbox" value="Gadget Troubleshooting"> 🔧 Gadget Troubleshooting</label>
+          <label><input type="checkbox" value="Software Installation"> 💾 Software Installation</label>
+          <label><input type="checkbox" value="Childcare"> 👶 Childcare</label>
+          <label><input type="checkbox" value="Elderly Care"> 🧓 Elderly Care</label>
+          <label><input type="checkbox" value="Special Needs Assistance"> ♿ Special Needs Assistance</label>
+          <label><input type="checkbox" value="Basic First Aid"> ⛑️ Basic First Aid</label>
+          <label><input type="checkbox" value="Medication Reminders"> 💊 Medication Reminders</label>
+          <label><input type="checkbox" value="Feeding Assistance"> 🍽️ Feeding Assistance</label>
+          <label><input type="checkbox" value="Companion Care"> 🤝 Companion Care</label>
+          <label><input type="checkbox" value="Diaper Changing"> 🧷 Diaper Changing</label>
+          <label><input type="checkbox" value="Bathing Assistance"> 🛁 Bathing Assistance</label>
+          <label><input type="checkbox" value="Bedside Support"> 🛏️ Bedside Support</label>
+          <label><input type="checkbox" value="Grocery Shopping"> 🛒 Grocery Shopping</label>
+          <label><input type="checkbox" value="Running Errands"> 🏃 Running Errands</label>
+          <label><input type="checkbox" value="Pet Walking"> 🐕 Pet Walking</label>
+          <label><input type="checkbox" value="Pet Bathing"> 🛁 Pet Bathing</label>
+          <label><input type="checkbox" value="Cooking for Elders"> 🍲 Cooking for Elders</label>
+          <label><input type="checkbox" value="House Sitting"> 🏠 House Sitting</label>
+          <label><input type="checkbox" value="Plant Watering"> 💧 Plant Watering</label>
+          <label><input type="checkbox" value="Mail Sorting"> 📬 Mail Sorting</label>
+          <label><input type="checkbox" value="Light Decoration (Holidays)"> 🎉 Light Decoration (Holidays)</label>
+          <label><input type="checkbox" value="Delivery Assistance"> 📦 Delivery Assistance</label>
+          <label><input type="checkbox" value="Sign Painting"> 🖌️ Sign Painting</label>
+          <label><input type="checkbox" value="Basic Graphic Design"> 🖥️ Basic Graphic Design</label>
+          <label><input type="checkbox" value="Poster Making"> 📰 Poster Making</label>
+          <label><input type="checkbox" value="Event Setup"> 🎪 Event Setup</label>
+          <label><input type="checkbox" value="Balloon Arrangement"> 🎈 Balloon Arrangement</label>
+          <label><input type="checkbox" value="Face Painting"> 🎭 Face Painting</label>
+          <label><input type="checkbox" value="Sound System Setup"> 🔊 Sound System Setup</label>
+          <label><input type="checkbox" value="Stage Decoration"> 🎤 Stage Decoration</label>
+          <label><input type="checkbox" value="Costume Repair"> 👗 Costume Repair</label>
+          <label><input type="checkbox" value="Recycling Management"> ♻️ Recycling Management</label>
         </div>
-        <ul id="skills-list" class="skills-list"></ul>
       </div>
 
       <div class="popup-section">
         <h3>Let's add your services</h3>
         <p>Your listed services help us connect you with clients who need your services.</p>
-        <select id="services-dropdown" class="services-dropdown" multiple size="8">
-          <option value="" disabled>Select one or more services</option>
-          <optgroup label="🔧 Skilled Trade / Labor-Based Skills">
-            <option>🔩 Plumbing</option>
-            <option>🪚 Carpentry</option>
-            <option>⚡ Electrical Work</option>
-            <option>🎨 Painting</option>
-            <option>🧱 Tiling</option>
-            <option>🏠 Roofing</option>
-            <option>🛠️ Masonry</option>
-            <option>🔥 Welding</option>
-            <option>🚗 Auto Repair</option>
-            <option>🏍️ Motorcycle Repair</option>
-            <option>🔌 Appliance Repair</option>
-            <option>🪑 Furniture Assembly</option>
-            <option>🔑 Locksmithing</option>
-            <option>🔪 Glass Cutting</option>
-            <option>🪵 Floor Installation</option>
-            <option>🛠️ Drywall Repair</option>
-            <option>❄️ HVAC Repair</option>
-            <option>🧹 Gutter Cleaning</option>
-            <option>🐜 Pest Control</option>
-            <option>🚽 Septic Tank Cleaning</option>
-          </optgroup>
-          <optgroup label="🧹 Household / Cleaning Skills">
-            <option>🏠 House Cleaning</option>
-            <option>🧼 Deep Cleaning</option>
-            <option>🪟 Window Cleaning</option>
-            <option>👕 Laundry and Ironing</option>
-            <option>🧽 Carpet Cleaning</option>
-            <option>💦 Pressure Washing</option>
-            <option>🏊 Pool Cleaning</option>
-            <option>📦 Organizing (Decluttering)</option>
-            <option>🗑️ Trash Removal</option>
-            <option>🛋️ Upholstery Cleaning</option>
-          </optgroup>
-          <optgroup label="🌿 Gardening & Outdoors">
-            <option>🌱 Gardening</option>
-            <option>🌳 Landscaping</option>
-            <option>🌾 Lawn Mowing</option>
-            <option>✂️ Tree Trimming</option>
-            <option>🍂 Leaf Blowing</option>
-            <option>🛠️ Fence Installation</option>
-            <option>🪲 Pesticide Application</option>
-            <option>💧 Sprinkler Repair</option>
-            <option>🎨 Outdoor Painting</option>
-            <option>❄️ Snow Removal</option>
-          </optgroup>
-          <optgroup label="🍳 Kitchen & Culinary Skills">
-            <option>🍲 Cooking</option>
-          </optgroup>
-        </select>
+        <div id="services-checkboxes" style="display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto; border: 1px solid #bbb; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+          <?php foreach ($categories as $label => $services): ?>
+              <strong><?php echo htmlspecialchars($label); ?></strong>
+              <?php foreach ($services as $service): ?>
+                  <label><input type="checkbox" value="<?php echo htmlspecialchars($service); ?>"> <?php echo htmlspecialchars($service); ?></label>
+              <?php endforeach; ?>
+          <?php endforeach; ?>
+        </div>
       </div>
 
       <hr>
+      <div class="popup-footer">
       <button class="popup-close" onclick="closePopup()">Continue</button>
+      </div>
     </div>
   </div>
 
@@ -161,28 +264,15 @@
       document.getElementById("popup-overlay").style.display = "none";
     }
 
-    function addSkill() {
-      const skillInput = document.getElementById("skill-input");
-      const skill = skillInput.value.trim();
-      if (skill !== "") {
-        const li = document.createElement("li");
-        li.textContent = skill;
-        document.getElementById("skills-list").appendChild(li);
-        skillInput.value = "";
-      } else {
-        alert("Please enter a skill.");
-      }
-    }
-
     function prepareFormData() {
-      // Collect skills from list items
-      const skillItems = document.querySelectorAll("#skills-list li");
-      const skills = Array.from(skillItems).map(item => item.textContent);
+      // Collect checked skills
+      const skillCheckboxes = document.querySelectorAll('#skills-checkboxes input[type="checkbox"]:checked');
+      const skills = Array.from(skillCheckboxes).map(cb => cb.value);
       document.getElementById("skills-hidden").value = skills.join(", ");
 
-      // Collect selected services
-      const serviceSelect = document.getElementById("services-dropdown");
-      const selectedServices = Array.from(serviceSelect.selectedOptions).map(option => option.textContent);
+      // Collect checked services
+      const serviceCheckboxes = document.querySelectorAll('#services-checkboxes input[type="checkbox"]:checked');
+      const selectedServices = Array.from(serviceCheckboxes).map(cb => cb.value);
       document.getElementById("selected-service-hidden").value = selectedServices.join(", ");
     }
   </script>

@@ -33,6 +33,32 @@ if (!empty($_GET['category'])) {
 $stmt = $conn->prepare($query);
 $stmt->execute($params);
 $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_POST['hire_now']) && isset($_SESSION['email'])) {
+    $sender_email = $_SESSION['email'];
+    $receiver_id = intval($_POST['provider_id']);
+    $service = isset($_POST['service']) ? $_POST['service'] : '';
+    $conn = new mysqli("localhost", "root", "", "registered_accounts");
+    $providerQ = $conn->prepare("SELECT email FROM user_profiles WHERE id=?");
+    $providerQ->bind_param("i", $receiver_id);
+    $providerQ->execute();
+    $providerQ->bind_result($receiver_email);
+    $providerQ->fetch();
+    $providerQ->close();
+    if ($receiver_email) {
+        $stmt = $conn->prepare("INSERT INTO requests (sender_email, receiver_email, service, status) VALUES (?, ?, ?, 'Pending')");
+        $stmt->bind_param("sss", $sender_email, $receiver_email, $service);
+        $stmt->execute();
+        $stmt->close();
+        // Add notification for provider
+        $notif = $conn->prepare("INSERT INTO notifications (user_email, message, type) VALUES (?, ?, 'info')");
+        $msg = "You have a new service request from $sender_email.";
+        $notif->bind_param("ss", $receiver_email, $msg);
+        $notif->execute();
+        $notif->close();
+        $successMsg = "Request sent!";
+    }
+}
 ?>
 
 
@@ -42,6 +68,7 @@ $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skill Sphere</title>
+    <link rel="stylesheet" href="designs/footer.css">
     <link rel="stylesheet" href="designs/services1.css">
     <link rel="stylesheet" href="designs/header1.css">
 </head>
@@ -57,12 +84,21 @@ $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <li><a href="services.php" class="active">SERVICES</a></li>
                 <li><a href="about_us.php">ABOUT</a></li>
                 <li><a href="contact_us.php">CONTACT US</a></li>
+                <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "superadmin"): ?>
+                  <li><a href="superadmin_dashboard.php">SUPER ADMIN</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
         <?php if (isset($_SESSION["user_id"])): ?>
           <div class="user-info" style="margin-left:auto; display: flex; align-items: center; gap: 18px; font-weight:600; color:#1B4D43; padding-left: 20px;">
-            <a href="user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none;">
-              <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
+            <a href="user_profile.php?email=<?php echo urlencode($_SESSION['email']); ?>" style="color:#1B4D43; font-weight:600; text-decoration:none; display: flex; align-items: center; gap: 6px;">
+              <span style="display:inline-flex; align-items:center;">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="vertical-align:middle; margin-right:6px;" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="10" cy="7" r="4" fill="#1B4D43"/>
+                  <ellipse cx="10" cy="15" rx="7" ry="4" fill="#1B4D43"/>
+                </svg>
+                <?php echo htmlspecialchars(isset($_SESSION["first_name"]) ? $_SESSION["first_name"] : (isset($_SESSION["email"]) ? $_SESSION["email"] : "")); ?>
+              </span>
             </a>
             <form method="post" action="" style="display:inline; margin:0;">
               <button type="submit" name="logout" style="margin-left:10px; background: linear-gradient(135deg, #e53935 0%, #ffb733 100%); color: #fff; border: none; border-radius: 20px; padding: 8px 18px; font-weight: 600; cursor: pointer;">Logout</button>
@@ -150,12 +186,12 @@ $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="service-list">
             <?php if (count($serviceProviders) > 0): ?>
                 <?php foreach ($serviceProviders as $provider): ?>
-                    <div class="service-item">
-                        <div class="details">
+                    <div class="service-item" style="display:flex;align-items:center;gap:32px;">
+                        <img src="<?php echo !empty($provider['profile_picture']) && file_exists('uploads/' . $provider['profile_picture']) ? 'uploads/' . htmlspecialchars($provider['profile_picture']) : 'assets/logo_ss.png'; ?>" alt="Profile Picture" style="height:100px;width:100px;border-radius:50%;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.08);border:2px solid #1B4D43;flex-shrink:0;">
+                        <div class="details" style="flex:1;display:flex;flex-direction:column;gap:8px;">
                             <h3><?php echo htmlspecialchars($provider['first_name']); ?></h3>
                             <p>
                                 <?php
-                                // Show services as blue water drop and snowflake icons if present
                                 $services = array_map('trim', explode(',', $provider['services']));
                                 $serviceIcons = [
                                     'Sprinkler Repair' => '💧',
@@ -169,11 +205,15 @@ $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 echo implode(', ', $serviceParts);
                                 ?>
                             </p>
-                            <p class="location"><span class="icon" style="color:#e53935;">📍</span> <?php echo htmlspecialchars($provider['address']); ?></p>
+                            <p class="location"><span class="icon" style="color:#e53935;">📍</span> <b><?php echo htmlspecialchars($provider['address']); ?></b></p>
                         </div>
                         <div class="actions">
                             <a href="user_profile.php?id=<?php echo urlencode($provider['id']); ?>" class="view-profile">View Full Profile</a>
-                            <button class="hire-now">HIRE NOW!</button>
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="provider_id" value="<?php echo $provider['id']; ?>">
+                                <input type="hidden" name="service" value="<?php echo htmlspecialchars($provider['services']); ?>">
+                                <button type="submit" name="hire_now" class="hire-now">HIRE NOW!</button>
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -183,15 +223,8 @@ $serviceProviders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
-    <footer>
-        <div class="footer-links">
-            <a href="security-privacy.php">Security & Privacy</a>
-            <a href="terms.php">Terms & Conditions</a>
-            <a href="contact_us.php">Contact</a>
-        </div>
-        <div class="copyright">
-            &copy; <?php echo date('Y'); ?> Skill Sphere. All rights reserved.
-        </div>
-    </footer>
+    <?php if (isset($successMsg)) echo '<div class="success-message">' . htmlspecialchars($successMsg) . '</div>'; ?>
+
+    <?php include 'footer.php'; ?>
 </body>
 </html>
