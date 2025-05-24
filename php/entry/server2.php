@@ -1,15 +1,14 @@
 <?php 
 session_start();
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "registered_accounts";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Direct DB connection (no db_connect.php)
+$host = 'localhost';
+$dbname = 'registered_accounts';
+$username = 'root';
+$password = '';
+$conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die('Database connection failed: ' . $conn->connect_error);
 }
 
 // Debug: Print all POST data to see what's being received
@@ -77,7 +76,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 }
 
-$conn->close();
+// Close the database connection
+if (isset($conn) && $conn instanceof mysqli) {
+    $conn->close();
+}
 
-include '../footer.php';
+include '../components/footer.php';
 ?>

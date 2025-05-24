@@ -1,0 +1,166 @@
+#hireNowModal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(44, 62, 80, 0.25) !important;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInPop 0.2s;
+}
+
+#hireNowModal .modal-content {
+  animation: modalIn 0.18s;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+  padding: 36px 36px 28px 36px;
+  max-width: 400px;
+  width: 95vw;
+  max-height: 92vh;
+  overflow-y: auto;
+  position: relative;
+  margin: 0 auto;
+}
+
+#hireNowModal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+#hireNowModal .modal-header h3 {
+  color: #1B4D43;
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+#hireNowModal .modal-close {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+
+#hireNowModal .modal-close:hover {
+  color: #d32f2f;
+}
+
+#hireNowModal .modal-field {
+  margin-bottom: 18px;
+}
+
+#hireNowModal .modal-label {
+  font-weight: 500;
+  color: #1B4D43;
+  margin-bottom: 6px;
+  display: block;
+}
+
+#hireNowModal .modal-value {
+  padding: 10px 12px;
+  background: #fafbfc;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  color: #333;
+  font-size: 1em;
+}
+
+#hireNowModal .modal-wage-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+#hireNowModal .peso-input-wrapper {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+#hireNowModal input[type="number"],
+#hireNowModal select,
+#hireNowModal textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 1em;
+  background: #fafbfc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#hireNowModal input[type="number"] {
+  padding-left: 28px;
+}
+
+#hireNowModal .peso-sign {
+  position: absolute;
+  left: 12px;
+  color: #666;
+}
+
+#hireNowModal select {
+  color: #1B4D43;
+  cursor: pointer;
+}
+
+#hireNowModal textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+#hireNowModal input:focus,
+#hireNowModal select:focus,
+#hireNowModal textarea:focus {
+  border-color: #1B4D43;
+  box-shadow: 0 0 0 2px #e0f2f1;
+  outline: none;
+}
+
+#hireNowModal button[type="submit"] {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 32px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #1B4D43 0%, #4CAF50 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.2s;
+}
+
+#hireNowModal button[type="submit"]:hover {
+  background: linear-gradient(135deg, #388e3c 0%, #1B4D43 100%);
+}
+
+@media (max-width: 600px) {
+  #hireNowModal .modal-content {
+    padding: 24px 16px;
+    width: 92vw;
+  }
+}
+
+@keyframes fadeInPop { 
+  from { opacity: 0; } 
+  to { opacity: 1; } 
+}
+
+@keyframes modalIn { 
+  from { transform: scale(0.95); opacity: 0; } 
+  to { transform: scale(1); opacity: 1; } 
+} 

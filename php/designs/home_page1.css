@@ -151,29 +151,35 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 30px 20px;
-    background: var(--background);
-    border-radius: var(--radius);
-    transition: all 0.3s ease;
+    padding: 24px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .offer-feature:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
-.offer-feature img, .offer-feature .feature-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    background: var(--icon-bg);
-    padding: 12px;
-    transition: all 0.3s ease;
+.offer-feature svg {
+    margin-bottom: 16px;
+    transition: transform 0.3s;
 }
 
-.offer-feature:hover img, .offer-feature:hover .feature-icon {
-    background: var(--secondary);
+.offer-feature:hover svg {
+    transform: scale(1.1);
+}
+
+.offer-feature img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    transition: transform 0.3s;
+}
+
+.offer-feature:hover img {
     transform: scale(1.1);
 }
 

@@ -1,19 +1,14 @@
 <?php
 // Start the session
 session_start();
-
-// Database connection variables
-$servername = "localhost"; // Adjust to your server
-$username = "root"; // Your database username
-$password = ""; // Your database password
-$dbname = "registered_accounts"; // Your database name
-
-// Create a connection to the MySQL database
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check if the connection is successful
+// Fix: Use direct DB connection if db_connect.php does not exist
+$host = 'localhost';
+$dbname = 'registered_accounts';
+$username = 'root';
+$password = '';
+$conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die('Database connection failed: ' . $conn->connect_error);
 }
 
 // Initialize variables for error messages
@@ -74,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($insertStmt->execute()) {
                 $_SESSION['message'] = "Registration successful! You can now log in.";
-                header("Location: sign_in.php");
+                header("Location: /Skill-Sphere/php/entry/sign_in.php");
                 exit();
             } else {
                 $generalErr = "Something went wrong. Please try again.";
@@ -96,4 +91,6 @@ function test_input($data) {
 }
 
 // Close the database connection
-$conn->close();
+if (isset($conn) && $conn instanceof mysqli) {
+    $conn->close();
+}

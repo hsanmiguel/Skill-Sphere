@@ -1,0 +1,78 @@
+/* Modal Overlay */
+#editProfileModalOverlay.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.32);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+/* Modal Content */
+#editProfileModalContent.modal-content {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    padding: 32px 28px 24px 28px;
+    max-width: 480px;
+    width: 98vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalIn 0.18s;
+}
+@keyframes modalIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: 2em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    z-index: 2;
+    transition: color 0.2s;
+}
+.close-btn:hover { color: #d32f2f; }
+
+/* Feedback Popup */
+.profile-feedback-popup {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    background: #e3f2fd;
+    color: #1B4D43;
+    font-weight: 600;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    padding: 16px 32px 16px 22px;
+    z-index: 99999;
+    min-width: 220px;
+    display: none;
+    align-items: center;
+    gap: 18px;
+    font-size: 1.08em;
+    animation: fadeInPop 0.3s;
+}
+@keyframes fadeInPop {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.popup-close {
+    background: none;
+    border: none;
+    color: #1B4D43;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: color 0.2s;
+}
+.popup-close:hover { color: #d32f2f; }

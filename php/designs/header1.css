@@ -93,7 +93,10 @@ nav ul li a.active {
 }
 
 .join-button {
-  margin-left: auto;
+  margin-left: 0;
+  display: flex;
+  align-items: center;
+  height: auto;
 }
 
 .join-button .btn {
@@ -105,7 +108,7 @@ nav ul li a.active {
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
-  margin-left: 20px;
+  margin-left: 0;
   box-shadow: 0 4px 15px rgba(27, 77, 67, 0.2);
   border: none;
   font-size: 1.1rem;
@@ -136,7 +139,12 @@ nav ul li a.active {
 }
 
 .user-link {
-  text-decoration: none !important;
+  color: #1B4D43;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .logout-btn {
@@ -159,4 +167,95 @@ nav ul li a.active {
   color: #fff;
   box-shadow: 0 8px 24px rgba(229, 57, 53, 0.18);
   transform: translateY(-2px) scale(1.04);
+}
+
+/* ...existing code... */
+
+.header-user-row {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-weight: 600;
+  color: #1B4D43;
+  padding-left: 20px;
+  background: none;
+  height: auto;
+  justify-content: flex-end;
+}
+
+.header-notification {
+  position: relative;
+  margin-right: 16px;
+}
+
+.header-notification a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.header-notification a:hover {
+  background-color: rgba(27, 77, 67, 0.08);
+}
+
+.header-notification svg {
+  transition: transform 0.2s;
+}
+
+.header-notification a:hover svg {
+  transform: rotate(8deg);
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #d32f2f;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 600px) {
+  .header-user-row {
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+    padding-left: 0;
+  }
+}
+
+.user-icon-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.user-name {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+.logout-form {
+  margin: 0;
 }

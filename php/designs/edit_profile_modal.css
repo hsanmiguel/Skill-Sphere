@@ -1,0 +1,181 @@
+/* Edit Profile Modal & Form Styles - Redesigned to match provided image */
+#editProfileModalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(44, 62, 80, 0.25) !important;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInPop 0.2s;
+}
+#editProfileModalContent {
+  animation: modalIn 0.18s;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+  padding: 36px 36px 28px 36px;
+  max-width: 400px;
+  width: 95vw;
+  max-height: 92vh;
+  overflow-y: auto;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#editProfileModalContent .profile-pic-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  width: 100%;
+}
+#editProfileModalContent .profile-pic-group img {
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border: 3px solid #fff;
+  margin-bottom: 6px;
+}
+#editProfileModalContent .profile-pic-group label {
+  font-size: 1em;
+  color: #444;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+#editProfileModalContent .close-btn {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+#editProfileModalContent .close-btn:hover {
+  color: #d32f2f;
+}
+#editProfileModalContent form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+#editProfileModalContent label {
+  font-weight: 500;
+  color: #1B4D43;
+  margin-bottom: 2px;
+  display: block;
+  width: 100%;
+}
+#editProfileModalContent input[type="text"],
+#editProfileModalContent input[type="date"],
+#editProfileModalContent input[type="file"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 1em;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  background: #fafbfc;
+  box-sizing: border-box;
+}
+#editProfileModalContent input[type="date"] {
+  color: #1B4D43;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+#editProfileModalContent input[type="date"]:focus {
+  border-color: #1B4D43;
+  box-shadow: 0 0 0 2px #e0f2f1;
+  outline: none;
+}
+#editProfileModalContent .btn-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  width: 100%;
+  justify-content: center;
+}
+#editProfileModalContent .edit-profile-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 32px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  background: linear-gradient(135deg, #1B4D43 0%, #4CAF50 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+#editProfileModalContent .edit-profile-btn.cancel {
+  background: #eee;
+  color: #222;
+  box-shadow: none;
+}
+#editProfileModalContent .edit-profile-btn:hover:not(.cancel) {
+  background: linear-gradient(135deg, #388e3c 0%, #1B4D43 100%);
+}
+#editProfileModalContent .edit-profile-btn.cancel:hover {
+  background: #e0e0e0;
+}
+#editProfileModalContent input[type="text"]#skillSearch,
+#editProfileModalContent input[type="text"]#serviceSearch {
+  margin-bottom: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  background: #fafbfc;
+}
+#skillsCheckboxes, #servicesCheckboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 120px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fafbfc;
+  width: 100%;
+}
+#skillsCheckboxes label, #servicesCheckboxes label {
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+  font-size: 1em;
+  background: #fff;
+  border-radius: 6px;
+  padding: 2px 8px 2px 2px;
+  transition: background 0.2s;
+}
+#skillsCheckboxes label:hover, #servicesCheckboxes label:hover {
+  background: #e3f2fd;
+}
+@media (max-width: 600px) {
+  #editProfileModalContent {
+    padding: 12px 2vw 12px 2vw;
+    max-width: 98vw;
+  }
+  #skillsCheckboxes label, #servicesCheckboxes label {
+    min-width: 100px;
+    font-size: 0.98em;
+  }
+}
+@keyframes fadeInPop { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modalIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } } 

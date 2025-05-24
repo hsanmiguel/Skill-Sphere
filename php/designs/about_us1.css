@@ -30,7 +30,7 @@ body {
   font-weight: 800;
   margin-bottom: 32px;
   letter-spacing: 1px;
-  color: #223;
+  color: #ffb733;
 }
 .about-content .highlight {
   color: #ffb733;
@@ -130,31 +130,38 @@ body {
   background: #f8f9fa;
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(27,77,67,0.06);
-  padding: 18px 22px 16px 22px;
+  padding: 28px 28px 22px 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 210px;
+  width: 260px;
+  transition: transform 0.25s, box-shadow 0.25s;
 }
 .member-image img {
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 12px;
   box-shadow: 0 2px 8px rgba(27,77,67,0.10);
 }
 .member-info h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.35rem;
+  font-weight: 800;
   color: #1B4D43;
   margin: 0 0 4px 0;
 }
 .member-info .role {
   color: #ffb733;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.13rem;
+  font-weight: 700;
   margin: 0;
+}
+.member:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 32px rgba(27,77,67,0.13);
+  background: #fffbe7;
+  border: 1.5px solid #ffb733;
 }
 @media (max-width: 900px) {
   .about-description {
