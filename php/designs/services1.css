@@ -1,0 +1,530 @@
+/* --- Color Palette --- */
+:root {
+  --teal-main: #1B4D43;
+  --teal-light: #4A9B8E;
+  --teal-dark: #2D5A52;
+  --teal-bg: #E8F4F2;
+  --accent: #ffa500;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: var(--teal-bg);
+  overflow-y: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+html, body {
+  height: 100%;
+}
+
+main, .service-providers-container {
+  flex: 1 0 auto;
+}
+
+/* Hero Section with Search Bar */
+.hero.services-hero {
+  background: linear-gradient(135deg, var(--teal-main) 0%, var(--teal-light) 100%);
+  color: white;
+  padding: 60px 20px 80px 20px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero.services-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background: url('assets/pattern.svg') repeat center center;
+  opacity: 0.08;
+  z-index: 0;
+}
+
+.hero.services-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.hero.services-hero p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+/* Search Bar Container */
+.search-bar-container {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.search-bar-container input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+  height: 44px;
+  border: 1px solid rgba(27, 77, 67, 0.2);
+  border-radius: 10px;
+  padding: 0 16px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.search-bar-container input[type="text"]:focus {
+  border-color: var(--teal-main);
+  box-shadow: 0 0 0 2px rgba(27, 77, 67, 0.1);
+  background: #fff;
+}
+
+.search-bar-container input[type="text"]::placeholder {
+  color: #7ba39b;
+  font-weight: 400;
+}
+
+.search-bar-container select {
+  min-width: 140px;
+  height: 44px;
+  border: 1px solid rgba(27, 77, 67, 0.2);
+  border-radius: 10px;
+  padding: 0 12px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.search-bar-container select:focus {
+  border-color: var(--teal-main);
+  box-shadow: 0 0 0 2px rgba(27, 77, 67, 0.1);
+  background: #fff;
+}
+
+.search-bar-container button {
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.search-bar-container button[type="submit"] {
+  background: linear-gradient(135deg, var(--accent) 0%, #ffb733 100%);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(255, 165, 0, 0.25);
+  min-width: 100px;
+}
+
+.search-bar-container button[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(255, 165, 0, 0.35);
+}
+
+.search-bar-container button[type="button"] {
+  background: rgba(245, 245, 245, 0.8);
+  color: var(--teal-main);
+  border: 1px solid rgba(27, 77, 67, 0.2);
+  min-width: 80px;
+}
+
+.search-bar-container button[type="button"]:hover {
+  background: rgba(233, 236, 239, 0.9);
+  border-color: var(--teal-light);
+  transform: translateY(-1px);
+}
+
+/* Service Providers Container */
+.service-providers-container {
+  max-width: 900px;
+  width: 90%;
+  margin: 30px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  padding: 30px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-providers-container::before {
+  content: '';
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background: url('assets/pattern.svg') repeat center center;
+  opacity: 0.03;
+  z-index: 0;
+}
+
+.service-providers-container h2 {
+  color: var(--teal-main);
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid var(--accent);
+  position: relative;
+  z-index: 1;
+  margin-left: 40px;
+  padding-left: 0;
+}
+
+/* Service Items */
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 2px solid #e0e8e6;
+  padding: 30px;
+  margin-bottom: 25px;
+  margin-left: 4px;
+  margin-right: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.service-item:hover {
+  box-shadow: 0 10px 30px rgba(74, 155, 142, 0.15);
+  border-color: var(--teal-light);
+  transform: translateY(-3px);
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.details h3 {
+  color: var(--teal-dark);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.details p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.details .service-icon, 
+.details .icon {
+  color: var(--accent);
+  font-size: 1.1em;
+  margin-right: 5px;
+}
+
+.details .location {
+  color: var(--teal-main);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.view-profile {
+  display: inline-block;
+  background: var(--teal-main);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: 2px solid var(--teal-main);
+}
+
+.view-profile:hover {
+  background: var(--teal-light);
+  border-color: var(--teal-light);
+}
+
+.hire-now {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border: 2px solid var(--accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.hire-now:hover {
+  background: #ffb733;
+  border-color: #ffb733;
+}
+
+/* --- Hire Now Modal Styles --- */
+#hireNowModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.25);
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+#hireNowModal.active {
+  display: flex !important;
+}
+
+#hireNowModal .modal-content {
+  background: #fff;
+  padding: 32px 28px 22px 28px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(27,77,67,0.15);
+  min-width: 320px;
+  max-width: 96vw;
+  position: relative;
+  font-family: inherit;
+}
+
+#hireNowModal .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+#hireNowModal .modal-header h3 {
+  margin: 0;
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #1B4D43;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#hireNowModal .modal-close {
+  background: none;
+  border: none;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  color: #888;
+  cursor: pointer;
+  margin-left: 18px;
+  padding: 0;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+#hireNowModal .modal-close:hover {
+  background: #f2f2f2;
+}
+
+#hireNowModal form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#hireNowModal .modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#hireNowModal .modal-label {
+  font-size: 0.98em;
+  color: #1B4D43;
+  font-weight: 600;
+}
+
+#hireNowModal .modal-value {
+  background: #f7f7f7;
+  border-radius: 6px;
+  padding: 7px 12px;
+  color: #333;
+  min-height: 24px;
+}
+
+#hireNowModal .modal-wage-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#hireNowModal input[type="number"] {
+  width: 100px;
+  padding: 7px 10px;
+  border: 1px solid #b2b2b2;
+  border-radius: 6px;
+  font-size: 1em;
+  color: #1B4D43;
+}
+
+#hireNowModal select {
+  padding: 7px 10px;
+  border: 1px solid #b2b2b2;
+  border-radius: 6px;
+  font-size: 1em;
+  color: #1B4D43;
+  background: #f7f7f7;
+}
+
+#hireNowModal .hire-now {
+  width: 100%;
+  margin-top: 12px;
+  background: linear-gradient(135deg,#1B4D43 0%,#2196f3 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-weight: 700;
+  font-size: 1.08em;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(27,77,67,0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+#hireNowModal .hire-now:hover {
+  background: #17613a;
+  box-shadow: 0 4px 16px rgba(27,77,67,0.13);
+}
+
+/* Peso Input Styles */
+.peso-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.peso-sign {
+  position: absolute;
+  left: 10px;
+  color: #1B4D43;
+  font-size: 1.08em;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.peso-input-wrapper input[type="number"] {
+  padding-left: 24px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .search-bar-container {
+    max-width: 90%;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 15px;
+  }
+  
+  .search-bar-container input[type="text"],
+  .search-bar-container select {
+    width: 100%;
+    min-width: 0;
+  }
+  
+  .search-bar-container button {
+    width: 100%;
+    min-width: 0;
+  }
+  
+  .service-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .hero.services-hero {
+    padding: 40px 15px 60px 15px;
+  }
+  
+  .service-providers-container {
+    width: 98%;
+    padding: 20px 8px;
+  }
+  .service-providers-container h2 {
+    margin-left: 12px;
+    padding-left: 0;
+  }
+  .service-item {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero.services-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .details h3 {
+    font-size: 1.3rem;
+  }
+  
+  .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .view-profile,
+  .hire-now {
+    width: 100%;
+    text-align: center;
+  }
+}

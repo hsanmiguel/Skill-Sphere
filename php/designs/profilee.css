@@ -1,0 +1,619 @@
+body, html {
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        background: #f4f6fb;
+        color: #222;
+        margin: 0;
+        padding: 0;
+    }
+    #profile-container {
+        max-width: 900px;
+        margin: 48px auto 0 auto;
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 6px 32px rgba(30,40,90,0.10), 0 1.5px 6px rgba(30,40,90,0.04);
+        padding: 0 0 32px 0;
+        overflow: hidden;
+    }
+    #profile-header {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        padding: 48px 48px 24px 48px;
+        background: linear-gradient(90deg, #e3f2fd 0%, #f1f8e9 100%);
+        border-bottom: 1.5px solid #e0e7ef;
+    }
+    .profile-avatar {
+        position: relative;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(30,40,90,0.10);
+        border: 4px solid #fff;
+        background: #f6f7f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        display: block;
+    }
+    .profile-main-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
+    }
+    .profile-name {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1B4D43;
+        margin: 0 0 6px 0;
+        letter-spacing: 0.5px;
+        line-height: 1.1;
+        word-break: break-word;
+    }
+    .profile-email {
+        font-size: 1.08rem;
+        color: #4a4a4a;
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 4px 14px;
+        display: inline-block;
+        font-weight: 500;
+        margin-bottom: 0;
+        margin-top: 0;
+        letter-spacing: 0.1px;
+    }
+    .profile-actions {
+        margin-top: 18px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .edit-profile-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1B4D43 0%, #4CAF50 100%);
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        padding: 7px 28px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1.05em;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        min-width: 140px;
+        min-height: 40px;
+        box-sizing: border-box;
+        gap: 8px;
+        text-decoration: none;
+        box-shadow: 0 2px 8px rgba(30,40,90,0.07);
+    }
+    .edit-profile-btn.edit-btn {
+        background: linear-gradient(135deg, #1B4D43 0%, #4CAF50 100%);
+        color: #fff;
+    }
+    .edit-profile-btn.edit-btn:hover {
+        background: linear-gradient(135deg, #388e3c 0%, #1B4D43 100%);
+        color: #fff;
+    }
+    .edit-profile-btn.trash-btn {
+        background: linear-gradient(135deg, #fbc02d 0%, #ffe082 100%);
+        color: #222;
+    }
+    .edit-profile-btn.trash-btn:hover {
+        background: linear-gradient(135deg, #ffe082 0%, #fbc02d 100%);
+        color: #222;
+    }
+    .edit-profile-btn.history-btn {
+        background: linear-gradient(135deg, #90caf9 0%, #e3f2fd 100%);
+        color: #1B4D43;
+    }
+    .edit-profile-btn.history-btn:hover {
+        background: linear-gradient(135deg, #e3f2fd 0%, #90caf9 100%);
+        color: #1B4D43;
+    }
+    .edit-profile-btn.hire-btn {
+        background: linear-gradient(135deg, #ff9800 0%, #ffd54f 100%);
+        color: #fff;
+        font-weight: 700;
+    }
+    .edit-profile-btn.hire-btn:hover {
+        background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+        color: #fff;
+    }
+    #profile-content {
+        padding: 36px 48px 0 48px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 48px;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .profile-section {
+        flex: 1 1 320px;
+        min-width: 260px;
+        background: #f8fafc;
+        border-radius: 16px;
+        box-shadow: 0 1.5px 8px rgba(30,40,90,0.04);
+        padding: 28px 28px 18px 28px;
+        margin-bottom: 0;
+        margin-right: 0;
+        margin-top: 0;
+    }
+    .profile-section h3 {
+        margin-top: 0;
+        margin-bottom: 18px;
+        color: #1B4D43;
+        font-size: 1.18rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    .profile-section .info-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        font-size: 1.05em;
+    }
+    .profile-section .info-label {
+        color: #888;
+        min-width: 90px;
+        font-weight: 500;
+    }
+    .profile-section .info-value {
+        color: #222;
+        font-weight: 500;
+        word-break: break-word;
+    }
+    .profile-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #e3f2fd;
+        color: #1B4D43;
+        border-radius: 999px;
+        padding: 6px 16px;
+        font-size: 1.01em;
+        font-weight: 500;
+        box-shadow: 0 1px 4px rgba(30,40,90,0.04);
+        margin-bottom: 6px;
+        transition: background 0.18s, color 0.18s;
+        user-select: none;
+    }
+    .chip.service {
+        background: #f1f8e9;
+        color: #388e3c;
+    }
+    @media (max-width: 900px) {
+        #profile-container {
+            max-width: 99vw;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        #profile-header, #profile-content {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+        #profile-content {
+            gap: 24px;
+        }
+    }
+    @media (max-width: 700px) {
+        #profile-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 32px 10px 18px 10px;
+        }
+        #profile-content {
+            flex-direction: column;
+            gap: 18px;
+            padding: 24px 10px 0 10px;
+        }
+        .profile-section {
+            padding: 18px 10px 12px 10px;
+        }
+    }
+    /* Modal for Hire Now */
+    .modal-overlay.hire-modal {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0; top: 0; right: 0; bottom: 0;
+        background: rgba(30,40,90,0.18);
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-overlay.hire-modal[style*="display: flex"] {
+        display: flex !important;
+    }
+    .modal-content.hire-modal-content {
+        margin: auto;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 32px rgba(30,40,90,0.18);
+        padding: 32px 32px 24px 32px;
+        max-width: 420px;
+        width: 95vw;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .modal-close.hire-modal-close {
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        background: none;
+        border: none;
+        font-size: 2em;
+        color: #888;
+        cursor: pointer;
+        z-index: 2;
+    }
+    .hire-modal-title {
+        font-size: 1.3em;
+        font-weight: 700;
+        color: #1B4D43;
+        margin-bottom: 18px;
+        text-align: center;
+    }
+    .hire-modal-label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #222;
+    }
+    .hire-modal-textarea {
+        width: 100%;
+        min-height: 80px;
+        border-radius: 8px;
+        border: 1.2px solid #bbb;
+        padding: 10px;
+        font-size: 1.05em;
+        margin-bottom: 18px;
+        resize: vertical;
+        background: #f8fafc;
+    }
+    .hire-modal-btns {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 8px;
+    }
+    .hire-modal-btn {
+        background: linear-gradient(135deg, #1B4D43 0%, #4CAF50 100%);
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        padding: 7px 28px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1.05em;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        min-width: 120px;
+        min-height: 40px;
+        box-sizing: border-box;
+        gap: 8px;
+        text-decoration: none;
+        box-shadow: 0 2px 8px rgba(30,40,90,0.07);
+    }
+    .hire-modal-btn.cancel {
+        background: #eee;
+        color: #222;
+        border: 1px solid #bbb;
+    }
+    .hire-modal-btn.cancel:hover {
+        background: #f8fafc;
+        color: #1B4D43;
+    }
+    .hire-modal-btn.submit {
+        background: linear-gradient(135deg, #ff9800 0%, #ffd54f 100%);
+        color: #fff;
+        font-weight: 700;
+    }
+    .hire-modal-btn.submit:hover {
+        background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+        color: #fff;
+    }
+    .hire-modal-success {
+        color: #388e3c;
+        font-weight: 600;
+        margin-top: 10px;
+        text-align: center;
+    }
+    .hire-modal-error {
+        color: #d32f2f;
+        font-weight: 600;
+        margin-top: 10px;
+        text-align: center;
+    }
+    /* --- Universal Modal for HIRE NOW --- */
+
+/* --- Review Modal Styles --- */
+.review-modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(33,33,33,0.25);
+    align-items: center;
+    justify-content: center;
+}
+.review-modal-overlay[style*="display: block"],
+.review-modal-overlay[style*="display: flex"] {
+    display: flex !important;
+}
+.review-modal-content {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px 28px 24px 28px;
+    max-width: 410px;
+    width: 95vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: auto;
+}
+.review-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.7em;
+    color: var(--text-subtle);
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.18s;
+}
+.review-modal-close:hover,
+.review-modal-close:focus {
+    color: var(--primary);
+}
+.review-modal-title {
+    font-size: 1.25em;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--primary);
+    text-align: center;
+}
+.star-rating {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 10px;
+}
+.star-rating .star {
+    font-size: 2em;
+    color: var(--accent);
+    cursor: pointer;
+    transition: color 0.18s;
+    outline: none;
+    user-select: none;
+}
+.star-rating .star.selected,
+.star-rating .star:focus,
+.star-rating .star:hover {
+    color: var(--secondary);
+}
+.review-modal-textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 7px;
+    border: 1.2px solid #bbb;
+    font-size: 1.07em;
+    background: var(--background);
+    margin-bottom: 0;
+    resize: vertical;
+    transition: border-color 0.18s;
+}
+.review-modal-textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+.review-modal-btns {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+.review-modal-btn {
+    padding: 7px 18px;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    box-shadow: none;
+}
+.review-modal-btn.cancel {
+    background: #eee;
+    color: #444;
+}
+.review-modal-btn.cancel:hover,
+.review-modal-btn.cancel:focus {
+    background: var(--background);
+    color: var(--primary);
+}
+.review-modal-btn.submit {
+    background: var(--primary);
+    color: #fff;
+}
+.review-modal-btn.submit:hover,
+.review-modal-btn.submit:focus {
+    background: var(--secondary);
+    color: var(--primary);
+}
+
+    .hire-modal-overlay {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0; top: 0; right: 0; bottom: 0;
+        background: rgba(30,40,90,0.18);
+        align-items: center;
+        justify-content: center;
+    }
+    .hire-modal-overlay.active {
+        display: flex !important;
+    }
+    .hire-modal-content {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 32px rgba(30,40,90,0.18);
+        padding: 32px 32px 24px 32px;
+        max-width: 420px;
+        width: 95vw;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin: auto;
+    }
+    .hire-modal-close {
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        background: none;
+        border: none;
+        font-size: 2em;
+        color: #888;
+        cursor: pointer;
+        z-index: 2;
+    }
+    .hire-modal-btns {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 8px;
+    }
+    .hire-modal-btn {
+        background: linear-gradient(135deg, #1B4D43 0%, #4CAF50 100%);
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        padding: 7px 28px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1.05em;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        min-width: 120px;
+        min-height: 40px;
+        box-sizing: border-box;
+        gap: 8px;
+        text-decoration: none;
+        box-shadow: 0 2px 8px rgba(30,40,90,0.07);
+    }
+    .hire-modal-btn.cancel {
+        background: #eee;
+        color: #222;
+        border: 1px solid #bbb;
+    }
+    .hire-modal-btn.cancel:hover {
+        background: #f8fafc;
+        color: #1B4D43;
+    }
+    .hire-modal-btn.submit {
+        background: linear-gradient(135deg, #ff9800 0%, #ffd54f 100%);
+        color: #fff;
+        font-weight: 700;
+    }
+    .hire-modal-btn.submit:hover {
+        background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+        color: #fff;
+    }
+    .hire-modal-success {
+        color: #388e3c;
+        font-weight: 600;
+        margin-top: 10px;
+        text-align: center;
+    }
+    .hire-modal-error {
+        color: #d32f2f;
+        font-weight: 600;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    /* --- Edit Profile Modal Styles --- */
+    .edit-profile-modal-overlay {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0; top: 0; right: 0; bottom: 0;
+        background: rgba(30,40,90,0.18);
+        align-items: center;
+        justify-content: center;
+    }
+    .edit-profile-modal-overlay.active {
+        display: flex !important;
+    }
+    .edit-profile-modal-content {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 32px rgba(30,40,90,0.18);
+        padding: 32px 32px 24px 32px;
+        max-width: 520px;
+        width: 95vw;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin: auto;
+        animation: fadeInPop 0.25s;
+    }
+    .edit-profile-modal-close {
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        background: none;
+        border: none;
+        font-size: 2em;
+        color: #888;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    /* --- Dashboard Styles --- */
+    #profile-dashboard {
+        max-width: 1400px; /* Further increased width */
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        background: none; /* Removed extra background */
+        box-shadow: none; /* Removed extra box shadow */
+    }
+    .dashboard-inner {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .dashboard-col {
+        flex: 1 1 calc(33.333% - 20px); /* Adjusted column width */
+        min-width: 300px;
+    }
+    .card {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: #fff; /* Ensured cards have a clean background */
+    }

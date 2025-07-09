@@ -1,0 +1,197 @@
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.dashboard-header {
+  background: #1B4D43;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 70px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.dashboard-header .logo-container {
+  display: flex;
+  align-items: center;
+}
+.dashboard-header .logo {
+  width: 48px;
+  height: 48px;
+  margin-right: 12px;
+}
+.dashboard-header h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+.dashboard-header nav ul {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.dashboard-header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+.dashboard-header nav ul li a.active,
+.dashboard-header nav ul li a:hover {
+  color: #ffa500;
+}
+
+.dashboard-main {
+  display: flex;
+  gap: 32px;
+  max-width: 1600px;
+  margin: 40px auto 0 auto;
+  padding: 0 24px;
+}
+.dashboard-col {
+  flex: 1;
+  min-width: 280px;
+}
+.dashboard-profile {
+  max-width: 320px;
+}
+.dashboard-notifications {
+  max-width: 340px;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: 32px 24px;
+  text-align: center;
+}
+.profile-avatar img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover;
+  background: #e9eaeb;
+}
+.profile-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1B4D43;
+  margin: 10px 0 4px 0;
+}
+.profile-location {
+  color: #555;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+.profile-services {
+  color: #333;
+  margin-bottom: 18px;
+  font-size: 1rem;
+}
+.edit-profile-btn {
+  display: block;
+  width: 100%;
+  background: #ffa500;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+.edit-profile-btn:hover {
+  background: #ff8c00;
+}
+
+.card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: 28px 24px 20px 24px;
+  margin-bottom: 28px;
+}
+.card-title {
+  color: #1B4D43;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+.request-item {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.request-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+.accept-btn {
+  background: #1B4D43;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.accept-btn:hover {
+  background: #2a6a5d;
+}
+.decline-btn {
+  background: #555;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.decline-btn:hover {
+  background: #b71c1c;
+}
+
+.notification-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.notification-item.success {
+  color: #1B4D43;
+}
+.notification-item.error {
+  color: #b71c1c;
+}
+.notification-item.info {
+  color: #ffa500;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-main {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .dashboard-profile, .dashboard-notifications {
+    max-width: 100%;
+  }
+} 
